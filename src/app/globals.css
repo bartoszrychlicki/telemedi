@@ -494,6 +494,42 @@ a {
   white-space: nowrap;
 }
 
+.table-sort {
+  display: inline-flex;
+  min-height: 24px;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  text-align: left;
+  text-transform: inherit;
+  white-space: nowrap;
+}
+
+.table-sort svg {
+  color: var(--muted-foreground);
+  opacity: 0.62;
+}
+
+.table-sort:hover,
+.table-sort.active {
+  color: var(--foreground);
+}
+
+.table-sort:hover svg,
+.table-sort.active svg {
+  color: var(--foreground);
+  opacity: 1;
+}
+
+.table-sort:focus-visible {
+  border-radius: 4px;
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring) 25%, transparent);
+}
+
 .table td {
   border-bottom: 1px solid var(--border);
   padding: var(--row-py) 16px;

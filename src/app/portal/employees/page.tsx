@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Download, FileSpreadsheet, Plus, Search, Upload } from "lucide-react";
+import { ArrowDown, ArrowUp, ArrowUpDown, Download, FileSpreadsheet, Plus, Search, Upload } from "lucide-react";
 
 import { apiFetch, postJson } from "@/lib/client-api";
-import { maskPesel } from "@/components/telemedi/format";
+import { formatDate, maskPesel } from "@/components/telemedi/format";
 import { EmptyState, ErrorState, Field, LoadingState, Modal } from "@/components/telemedi/ui";
 import type { Employee } from "@/components/telemedi/types";
 
@@ -24,10 +24,52 @@ const emptyEmployee = {
 };
 
 type EmployeeForm = typeof emptyEmployee;
+type SortKey = "employee" | "position" | "pesel" | "contact" | "referrals" | "createdAt";
+type SortDirection = "asc" | "desc";
+type SortState = { key: SortKey; direction: SortDirection };
+
+const initialSort: SortState = { key: "createdAt", direction: "desc" };
+
+function compareText(left: string | null | undefined, right: string | null | undefined) {
+  return (left ?? "").localeCompare(right ?? "", "pl", { sensitivity: "base", numeric: true });
+}
+
+function compareNumbers(left: number, right: number) {
+  return left - right;
+}
+
+function compareDates(left: string, right: string) {
+  const leftTime = new Date(left).getTime();
+  const rightTime = new Date(right).getTime();
+  return (Number.isNaN(leftTime) ? 0 : leftTime) - (Number.isNaN(rightTime) ? 0 : rightTime);
+}
+
+function compareEmployees(left: Employee, right: Employee, key: SortKey) {
+  const fallback =
+    compareText(left.lastName, right.lastName) ||
+    compareText(left.firstName, right.firstName) ||
+    compareText(left.id, right.id);
+
+  switch (key) {
+    case "employee":
+      return fallback;
+    case "position":
+      return compareText(left.position, right.position) || fallback;
+    case "pesel":
+      return compareText(left.pesel, right.pesel) || fallback;
+    case "contact":
+      return compareText(left.email, right.email) || compareText(left.phone, right.phone) || fallback;
+    case "referrals":
+      return compareNumbers(left._count?.referrals ?? 0, right._count?.referrals ?? 0) || fallback;
+    case "createdAt":
+      return compareDates(left.createdAt, right.createdAt) || fallback;
+  }
+}
 
 export default function EmployeesPage() {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [query, setQuery] = useState("");
+  const [sort, setSort] = useState<SortState>(initialSort);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
@@ -67,6 +109,21 @@ export default function EmployeesPage() {
         .includes(q),
     );
   }, [employees, query]);
+
+  const sorted = useMemo(() => {
+    const direction = sort.direction === "asc" ? 1 : -1;
+    return [...filtered].sort((left, right) => compareEmployees(left, right, sort.key) * direction);
+  }, [filtered, sort]);
+
+  function sortBy(key: SortKey) {
+    setSort((current) => {
+      if (current.key === key) {
+        return { key, direction: current.direction === "asc" ? "desc" : "asc" };
+      }
+
+      return { key, direction: key === "createdAt" || key === "referrals" ? "desc" : "asc" };
+    });
+  }
 
   return (
     <div className="page">
@@ -115,15 +172,16 @@ export default function EmployeesPage() {
           <table className="table">
             <thead>
               <tr>
-                <th>Pracownik</th>
-                <th>Stanowisko</th>
-                <th>PESEL</th>
-                <th>Kontakt</th>
-                <th>Skierowania</th>
+                <SortableHeader label="Pracownik" sortKey="employee" sort={sort} onSort={sortBy} />
+                <SortableHeader label="Stanowisko" sortKey="position" sort={sort} onSort={sortBy} />
+                <SortableHeader label="PESEL" sortKey="pesel" sort={sort} onSort={sortBy} />
+                <SortableHeader label="Kontakt" sortKey="contact" sort={sort} onSort={sortBy} />
+                <SortableHeader label="Skierowania" sortKey="referrals" sort={sort} onSort={sortBy} />
+                <SortableHeader label="Dodano" sortKey="createdAt" sort={sort} onSort={sortBy} />
               </tr>
             </thead>
             <tbody>
-              {filtered.map((employee) => (
+              {sorted.map((employee) => (
                 <tr key={employee.id}>
                   <td>
                     <div className="bold">
@@ -138,6 +196,7 @@ export default function EmployeesPage() {
                     <div className="muted t-sm">{employee.phone}</div>
                   </td>
                   <td>{employee._count?.referrals ?? 0}</td>
+                  <td className="tabular">{formatDate(employee.createdAt)}</td>
                 </tr>
               ))}
             </tbody>
@@ -164,6 +223,35 @@ export default function EmployeesPage() {
         />
       ) : null}
     </div>
+  );
+}
+
+function SortableHeader({
+  label,
+  sortKey,
+  sort,
+  onSort,
+}: {
+  label: string;
+  sortKey: SortKey;
+  sort: SortState;
+  onSort: (key: SortKey) => void;
+}) {
+  const active = sort.key === sortKey;
+  const Icon = active ? (sort.direction === "asc" ? ArrowUp : ArrowDown) : ArrowUpDown;
+
+  return (
+    <th aria-sort={active ? (sort.direction === "asc" ? "ascending" : "descending") : "none"}>
+      <button
+        aria-label={`Sortuj po kolumnie ${label}`}
+        className={`table-sort${active ? " active" : ""}`}
+        onClick={() => onSort(sortKey)}
+        type="button"
+      >
+        <span>{label}</span>
+        <Icon size={14} strokeWidth={2.2} />
+      </button>
+    </th>
   );
 }
 

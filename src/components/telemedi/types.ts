@@ -57,6 +57,7 @@ export type Employee = {
   address: string;
   email: string;
   phone: string;
+  createdAt: string;
   _count?: { referrals: number };
 };
 
