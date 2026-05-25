@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
 
 import { apiFetch, postJson } from "@/lib/client-api";
+import { validateRequired } from "@/lib/form-validation";
 import {
   hazardCategoryLabels,
   hazardCategoryOrder,
@@ -126,9 +127,44 @@ export default function NewReferralPage() {
     );
   }
 
-  async function submit() {
-    setPending(true);
+  function goToStep2() {
+    const validationError = validateRequired([
+      { label: "Pracownicy", value: employeeIds.length ? "selected" : "" },
+      { label: "Termin wykonania badań", value: deadlineDate },
+    ]);
+
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
     setError("");
+    setStep(2);
+  }
+
+  async function submit() {
+    if (pending) return;
+    setError("");
+
+    const validationError =
+      validateRequired([
+        { label: "Opis stanowiska", value: positionDescription },
+        { label: "Opis warunków pracy", value: workDescription },
+        { label: "Czynniki", value: selectedHazards.length ? "selected" : "" },
+      ]) ??
+      validateRequired(
+        selectedHazards.map((hazard) => ({
+          label: `Wielkość narażenia: ${hazard.factorName}`,
+          value: hazard.exposureValue,
+        })),
+      );
+
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    setPending(true);
     try {
       const result = await postJson<ReferralDetail[]>("/api/referrals", {
         employeeIds,
@@ -196,21 +232,21 @@ export default function NewReferralPage() {
           </div>
           <div className="card col">
             <h2 className="t-lg bold">Badanie i termin</h2>
-            <Field label="Rodzaj badania">
-              <select className="select" value={type} onChange={(e) => setType(e.target.value as ReferralType)}>
+            <Field label="Rodzaj badania" required>
+              <select className="select" required value={type} onChange={(e) => setType(e.target.value as ReferralType)}>
                 {Object.entries(referralTypeLabels).map(([value, label]) => (
                   <option key={value} value={value}>{label}</option>
                 ))}
               </select>
             </Field>
-            <Field label="Kontekst zatrudnienia">
-              <select className="select" value={employmentContext} onChange={(e) => setEmploymentContext(e.target.value as "EMPLOYED" | "STARTING_WORK")}>
+            <Field label="Kontekst zatrudnienia" required>
+              <select className="select" required value={employmentContext} onChange={(e) => setEmploymentContext(e.target.value as "EMPLOYED" | "STARTING_WORK")}>
                 <option value="EMPLOYED">Osoba zatrudniona</option>
                 <option value="STARTING_WORK">Osoba podejmująca pracę</option>
               </select>
             </Field>
-            <Field label="Termin wykonania badań">
-              <input className="input" type="date" value={deadlineDate} onChange={(e) => setDeadlineDate(e.target.value)} />
+            <Field label="Termin wykonania badań" required>
+              <input className="input" required type="date" value={deadlineDate} onChange={(e) => setDeadlineDate(e.target.value)} />
             </Field>
             <Field label="Szablon stanowiska">
               <select className="select" onChange={(e) => applyTemplate(e.target.value)} defaultValue="">
@@ -223,7 +259,7 @@ export default function NewReferralPage() {
             <button
               className="btn btn-primary"
               disabled={employeeIds.length === 0}
-              onClick={() => setStep(2)}
+              onClick={goToStep2}
             >
               Dalej
               <ArrowRight size={18} />
@@ -246,11 +282,11 @@ export default function NewReferralPage() {
               </button>
             </div>
             <div className="grid-2 mt-4">
-              <Field label="Opis stanowiska">
-                <textarea className="textarea" value={positionDescription} onChange={(e) => setPositionDescription(e.target.value)} />
+              <Field label="Opis stanowiska" required>
+                <textarea className="textarea" required value={positionDescription} onChange={(e) => setPositionDescription(e.target.value)} />
               </Field>
-              <Field label="Opis warunków pracy">
-                <textarea className="textarea" value={workDescription} onChange={(e) => setWorkDescription(e.target.value)} />
+              <Field label="Opis warunków pracy" required>
+                <textarea className="textarea" required value={workDescription} onChange={(e) => setWorkDescription(e.target.value)} />
               </Field>
             </div>
           </div>
@@ -283,10 +319,10 @@ export default function NewReferralPage() {
               <h2 className="t-lg bold">Wartości narażenia do PDF</h2>
               <div className="col mt-4">
                 {selectedHazards.map((hazard) => (
-                  <div className="card" key={hazard.hazardFactorId}>
-                    <div className="bold">{hazard.factorName}</div>
-                    <Field label="Wielkość narażenia">
-                      <input className="input" value={hazard.exposureValue} onChange={(e) => updateHazard(hazard.hazardFactorId, "exposureValue", e.target.value)} />
+                    <div className="card" key={hazard.hazardFactorId}>
+                      <div className="bold">{hazard.factorName}</div>
+                    <Field label="Wielkość narażenia" required>
+                      <input className="input" required value={hazard.exposureValue} onChange={(e) => updateHazard(hazard.hazardFactorId, "exposureValue", e.target.value)} />
                     </Field>
                     <Field label="Wyniki pomiarów">
                       <input className="input" value={hazard.measurementResult} onChange={(e) => updateHazard(hazard.hazardFactorId, "measurementResult", e.target.value)} />

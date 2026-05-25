@@ -3,6 +3,8 @@
 import { useState } from "react";
 
 import { apiFetch } from "@/lib/client-api";
+import { validateEmail, validateRequired } from "@/lib/form-validation";
+import { Field } from "@/components/telemedi/ui";
 import type { MeResponse } from "@/components/telemedi/types";
 
 const demoAccounts = [
@@ -19,23 +21,41 @@ export default function LoginPage() {
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setPending(true);
-    setMessage("");
+    if (pending) return;
 
-    const response = await fetch("/api/auth/sign-in/email", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+    const validationError =
+      validateRequired([
+        { label: "Email", value: email },
+        { label: "Hasło", value: password },
+      ]) ?? validateEmail("Email", email, true);
 
-    if (!response.ok) {
-      setPending(false);
-      setMessage("Nie udało się zalogować. Sprawdź dane demo i seed bazy.");
+    if (validationError) {
+      setMessage(validationError);
       return;
     }
 
-    const me = await apiFetch<MeResponse>("/api/me").catch(() => null);
-    window.location.href = me?.permissions.isSuperAdmin ? "/admin" : "/portal/dashboard";
+    setPending(true);
+    setMessage("");
+
+    try {
+      const response = await fetch("/api/auth/sign-in/email", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        setMessage("Nie udało się zalogować. Sprawdź dane demo i seed bazy.");
+        return;
+      }
+
+      const me = await apiFetch<MeResponse>("/api/me").catch(() => null);
+      window.location.href = me?.permissions.isSuperAdmin ? "/admin" : "/portal/dashboard";
+    } catch {
+      setMessage("Nie udało się połączyć z serwerem. Spróbuj ponownie.");
+    } finally {
+      setPending(false);
+    }
   }
 
   return (
@@ -73,24 +93,24 @@ export default function LoginPage() {
               </button>
             ))}
           </div>
-          <label className="field">
-            <span className="label">Email</span>
+          <Field label="Email" required>
             <input
               className="input"
               onChange={(event) => setEmail(event.target.value)}
+              required
               type="email"
               value={email}
             />
-          </label>
-          <label className="field">
-            <span className="label">Hasło</span>
+          </Field>
+          <Field label="Hasło" required>
             <input
               className="input"
               onChange={(event) => setPassword(event.target.value)}
+              required
               type="password"
               value={password}
             />
-          </label>
+          </Field>
           <button className="btn btn-primary" disabled={pending} type="submit">
             {pending ? "Logowanie..." : "Zaloguj"}
           </button>

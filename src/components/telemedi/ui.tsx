@@ -47,14 +47,19 @@ export function Field({
   label,
   children,
   help,
+  required,
 }: {
   label: string;
   children: ReactNode;
   help?: string;
+  required?: boolean;
 }) {
   return (
     <label className="field">
-      <span className="label">{label}</span>
+      <span className="label">
+        <span>{label}</span>
+        {required ? <span className="required-label">wymagane</span> : null}
+      </span>
       {children}
       {help ? <span className="help">{help}</span> : null}
     </label>

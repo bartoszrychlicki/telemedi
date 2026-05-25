@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link as LinkIcon, Send } from "lucide-react";
 
 import { apiFetch, patchJson, postJson } from "@/lib/client-api";
+import { validateEmail, validateRequired } from "@/lib/form-validation";
 import { formatDate, roleLabels } from "@/components/telemedi/format";
 import { ErrorState, Field, LoadingState } from "@/components/telemedi/ui";
 import type { CompanySettings, MeResponse } from "@/components/telemedi/types";
@@ -15,6 +16,8 @@ export default function SettingsPage() {
   const [message, setMessage] = useState("");
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviteUrl, setInviteUrl] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [inviting, setInviting] = useState(false);
 
   async function load() {
     setError("");
@@ -35,21 +38,46 @@ export default function SettingsPage() {
   }, []);
 
   async function save() {
-    if (!settings) return;
+    if (!settings || saving) return;
     setMessage("");
     setError("");
+
+    const validationError =
+      validateRequired([
+        { label: "Nazwa", value: settings.name },
+        { label: "NIP", value: settings.nip },
+        { label: "Adres", value: settings.address },
+      ]) ?? validateEmail("Email kontaktowy", settings.contactEmail ?? "");
+
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    setSaving(true);
     try {
       await patchJson("/api/company/settings", settings);
       setMessage("Ustawienia zapisane.");
       await load();
     } catch (err) {
       setError((err as Error).message);
+    } finally {
+      setSaving(false);
     }
   }
 
   async function invite() {
+    if (inviting) return;
     setMessage("");
     setError("");
+
+    const validationError = validateEmail("Email użytkownika HR", inviteEmail, true);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    setInviting(true);
     try {
       const result = await postJson<{ inviteUrl: string }>("/api/company/invitations", {
         email: inviteEmail,
@@ -59,6 +87,8 @@ export default function SettingsPage() {
       setMessage("Link zaproszenia został wygenerowany.");
     } catch (err) {
       setError((err as Error).message);
+    } finally {
+      setInviting(false);
     }
   }
 
@@ -96,14 +126,14 @@ export default function SettingsPage() {
         <div className="card col">
           <h2 className="t-lg bold">Dane firmy</h2>
           <div className="grid-2">
-            <Field label="Nazwa">
-              <input className="input" disabled={!canEdit} value={settings.name} onChange={(e) => setSettings({ ...settings, name: e.target.value })} />
+            <Field label="Nazwa" required>
+              <input className="input" disabled={!canEdit} required value={settings.name} onChange={(e) => setSettings({ ...settings, name: e.target.value })} />
             </Field>
             <Field label="Nazwa skrócona">
               <input className="input" disabled={!canEdit} value={settings.shortName ?? ""} onChange={(e) => setSettings({ ...settings, shortName: e.target.value })} />
             </Field>
-            <Field label="NIP">
-              <input className="input" disabled={!canEdit} value={settings.nip} onChange={(e) => setSettings({ ...settings, nip: e.target.value })} />
+            <Field label="NIP" required>
+              <input className="input" disabled={!canEdit} required value={settings.nip} onChange={(e) => setSettings({ ...settings, nip: e.target.value })} />
             </Field>
             <Field label="REGON">
               <input className="input" disabled={!canEdit} value={settings.regon} onChange={(e) => setSettings({ ...settings, regon: e.target.value })} />
@@ -112,11 +142,11 @@ export default function SettingsPage() {
               <input className="input" disabled={!canEdit} value={settings.contactPhone ?? ""} onChange={(e) => setSettings({ ...settings, contactPhone: e.target.value })} />
             </Field>
             <Field label="Email kontaktowy">
-              <input className="input" disabled={!canEdit} value={settings.contactEmail ?? ""} onChange={(e) => setSettings({ ...settings, contactEmail: e.target.value })} />
+              <input className="input" disabled={!canEdit} type="email" value={settings.contactEmail ?? ""} onChange={(e) => setSettings({ ...settings, contactEmail: e.target.value })} />
             </Field>
           </div>
-          <Field label="Adres">
-            <input className="input" disabled={!canEdit} value={settings.address} onChange={(e) => setSettings({ ...settings, address: e.target.value })} />
+          <Field label="Adres" required>
+            <input className="input" disabled={!canEdit} required value={settings.address} onChange={(e) => setSettings({ ...settings, address: e.target.value })} />
           </Field>
         </div>
 
@@ -134,7 +164,9 @@ export default function SettingsPage() {
           <Field label="Stopka PDF">
             <textarea className="textarea" disabled={!canEdit} value={settings.pdfFooterNote ?? ""} onChange={(e) => setSettings({ ...settings, pdfFooterNote: e.target.value })} />
           </Field>
-          <button className="btn btn-primary" onClick={save}>Zapisz ustawienia</button>
+          <button className="btn btn-primary" disabled={saving} onClick={save}>
+            {saving ? "Zapisywanie..." : "Zapisz ustawienia"}
+          </button>
         </div>
       </section>
 
@@ -172,12 +204,12 @@ export default function SettingsPage() {
 
         <div className="card col">
           <h2 className="t-lg bold">Zaproszenie HR</h2>
-          <Field label="Email użytkownika HR">
-            <input className="input" value={inviteEmail} onChange={(e) => setInviteEmail(e.target.value)} placeholder="hr@firma.pl" />
+          <Field label="Email użytkownika HR" required>
+            <input className="input" required type="email" value={inviteEmail} onChange={(e) => setInviteEmail(e.target.value)} placeholder="hr@firma.pl" />
           </Field>
-          <button className="btn btn-primary" onClick={invite}>
+          <button className="btn btn-primary" disabled={inviting} onClick={invite}>
             <Send size={18} />
-            Wygeneruj zaproszenie
+            {inviting ? "Generowanie..." : "Wygeneruj zaproszenie"}
           </button>
           {inviteUrl ? (
             <div className="banner banner-info">

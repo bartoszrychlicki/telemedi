@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Copy, Pencil, Plus, Trash2 } from "lucide-react";
 
 import { apiFetch, deleteJson, patchJson, postJson } from "@/lib/client-api";
+import { validateRequired } from "@/lib/form-validation";
 import { formatDate, hazardCategoryLabels } from "@/components/telemedi/format";
 import { EmptyState, ErrorState, Field, LoadingState, Modal } from "@/components/telemedi/ui";
 import type { Hazard, Template } from "@/components/telemedi/types";
@@ -208,8 +209,16 @@ function TemplateModal({
   }
 
   async function submit() {
-    setPending(true);
     setError("");
+    if (pending) return;
+
+    const validationError = validateRequired([{ label: "Nazwa szablonu", value: form.name }]);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    setPending(true);
     const payload = {
       name: form.name,
       positionDescription: form.positionDescription,
@@ -242,15 +251,17 @@ function TemplateModal({
       wide
       footer={
         <>
-          <button className="btn btn-outline" onClick={onClose}>Anuluj</button>
-          <button className="btn btn-primary" disabled={pending} onClick={submit}>Zapisz</button>
+          <button className="btn btn-outline" disabled={pending} onClick={onClose}>Anuluj</button>
+          <button className="btn btn-primary" disabled={pending} onClick={submit}>
+            {pending ? "Zapisywanie..." : "Zapisz"}
+          </button>
         </>
       }
     >
       {error ? <ErrorState message={error} /> : null}
       <div className="grid-2">
-        <Field label="Nazwa szablonu">
-          <input className="input" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+        <Field label="Nazwa szablonu" required>
+          <input className="input" required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
         </Field>
         <div className="field">
           <span className="label">Wybrane czynniki</span>

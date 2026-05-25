@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Pencil, Plus, Search, Trash2 } from "lucide-react";
 
 import { apiFetch, deleteJson, patchJson, postJson } from "@/lib/client-api";
+import { validateRequired } from "@/lib/form-validation";
 import {
   hazardCategoryLabels,
   hazardCategoryOrder,
@@ -201,15 +202,28 @@ function HazardModal({
   const [pending, setPending] = useState(false);
 
   async function submit() {
-    setPending(true);
     setError("");
+    if (pending) return;
+
+    const parsedNames = names
+      .split("\n")
+      .map((name) => name.trim())
+      .filter(Boolean);
+
+    const validationError = parsedNames.length
+      ? null
+      : "Uzupełnij wymagane pole: Nazwy czynników.";
+
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    setPending(true);
     try {
       await postJson("/api/hazards", {
         category,
-        names: names
-          .split("\n")
-          .map((name) => name.trim())
-          .filter(Boolean),
+        names: parsedNames,
       });
       onSaved();
     } catch (err) {
@@ -225,15 +239,18 @@ function HazardModal({
       onClose={onClose}
       footer={
         <>
-          <button className="btn btn-outline" onClick={onClose}>Anuluj</button>
-          <button className="btn btn-primary" disabled={pending} onClick={submit}>Dodaj</button>
+          <button className="btn btn-outline" disabled={pending} onClick={onClose}>Anuluj</button>
+          <button className="btn btn-primary" disabled={pending} onClick={submit}>
+            {pending ? "Dodawanie..." : "Dodaj"}
+          </button>
         </>
       }
     >
       {error ? <ErrorState message={error} /> : null}
-      <Field label={`Kategoria: ${hazardCategoryLabels[category]}`} help="Każdy czynnik wpisz w osobnej linii.">
+      <Field label={`Kategoria: ${hazardCategoryLabels[category]}`} help="Każdy czynnik wpisz w osobnej linii." required>
         <textarea
           className="textarea"
+          required
           value={names}
           onChange={(event) => setNames(event.target.value)}
           placeholder={"np.\nKontakt z klejem przemysłowym\nPraca w komorze chłodniczej"}
@@ -254,14 +271,26 @@ function EditHazardModal({
 }) {
   const [name, setName] = useState(hazard.name);
   const [error, setError] = useState("");
+  const [pending, setPending] = useState(false);
 
   async function submit() {
+    if (pending) return;
     setError("");
+
+    const validationError = validateRequired([{ label: "Nazwa czynnika", value: name }]);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    setPending(true);
     try {
       await patchJson(`/api/hazards/${hazard.id}`, { name });
       onSaved();
     } catch (err) {
       setError((err as Error).message);
+    } finally {
+      setPending(false);
     }
   }
 
@@ -271,14 +300,16 @@ function EditHazardModal({
       onClose={onClose}
       footer={
         <>
-          <button className="btn btn-outline" onClick={onClose}>Anuluj</button>
-          <button className="btn btn-primary" onClick={submit}>Zapisz</button>
+          <button className="btn btn-outline" disabled={pending} onClick={onClose}>Anuluj</button>
+          <button className="btn btn-primary" disabled={pending} onClick={submit}>
+            {pending ? "Zapisywanie..." : "Zapisz"}
+          </button>
         </>
       }
     >
       {error ? <ErrorState message={error} /> : null}
-      <Field label="Nazwa czynnika">
-        <input className="input" value={name} onChange={(event) => setName(event.target.value)} />
+      <Field label="Nazwa czynnika" required>
+        <input className="input" required value={name} onChange={(event) => setName(event.target.value)} />
       </Field>
     </Modal>
   );

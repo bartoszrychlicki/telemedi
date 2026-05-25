@@ -156,9 +156,12 @@ function DevPanel({
   onChanged: () => void;
 }) {
   const [error, setError] = useState("");
+  const [pendingStatus, setPendingStatus] = useState<ReferralStatus | null>(null);
 
   async function move(status: ReferralStatus) {
+    if (pendingStatus) return;
     setError("");
+    setPendingStatus(status);
     try {
       await postJson(`/api/referrals/${referral.id}/status`, {
         status,
@@ -174,6 +177,8 @@ function DevPanel({
       onChanged();
     } catch (err) {
       setError((err as Error).message);
+    } finally {
+      setPendingStatus(null);
     }
   }
 
@@ -187,11 +192,11 @@ function DevPanel({
         {statusFlow.map((status) => (
           <button
             className="dev-btn"
-            disabled={status === referral.status}
+            disabled={Boolean(pendingStatus) || status === referral.status}
             key={status}
             onClick={() => move(status)}
           >
-            <span>Ustaw {status}</span>
+            <span>{pendingStatus === status ? "Ustawianie..." : `Ustaw ${status}`}</span>
             <span>→</span>
           </button>
         ))}

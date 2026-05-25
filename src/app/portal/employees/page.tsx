@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ArrowDown, ArrowUp, ArrowUpDown, Download, FileSpreadsheet, Plus, Search, Upload } from "lucide-react";
 
 import { apiFetch, postJson } from "@/lib/client-api";
+import { validateEmail, validateRequired } from "@/lib/form-validation";
 import { formatDate, maskPesel } from "@/components/telemedi/format";
 import { EmptyState, ErrorState, Field, LoadingState, Modal } from "@/components/telemedi/ui";
 import type { Employee } from "@/components/telemedi/types";
@@ -277,8 +278,26 @@ function AddEmployeeModal({
   }
 
   async function submit() {
-    setPending(true);
+    if (pending) return;
     setError("");
+
+    const validationError =
+      validateRequired([
+        { label: "Imię", value: form.firstName },
+        { label: "Nazwisko", value: form.lastName },
+        { label: "PESEL", value: form.pesel },
+        { label: "Stanowisko", value: form.position },
+        { label: "Email", value: form.email },
+        { label: "Telefon", value: form.phone },
+        { label: "Adres zamieszkania", value: form.address },
+      ]) ?? validateEmail("Email", form.email, true);
+
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    setPending(true);
     try {
       await postJson<Employee>("/api/employees", form);
       onSaved();
@@ -296,37 +315,37 @@ function AddEmployeeModal({
       wide
       footer={
         <>
-          <button className="btn btn-outline" onClick={onClose}>Anuluj</button>
+          <button className="btn btn-outline" disabled={pending} onClick={onClose}>Anuluj</button>
           <button className="btn btn-primary" disabled={pending} onClick={submit}>
-            Zapisz
+            {pending ? "Zapisywanie..." : "Zapisz"}
           </button>
         </>
       }
     >
       {error ? <ErrorState message={error} /> : null}
       <div className="grid-2">
-        <Field label="Imię">
-          <input className="input" value={form.firstName} onChange={(e) => setField("firstName", e.target.value)} />
+        <Field label="Imię" required>
+          <input className="input" required value={form.firstName} onChange={(e) => setField("firstName", e.target.value)} />
         </Field>
-        <Field label="Nazwisko">
-          <input className="input" value={form.lastName} onChange={(e) => setField("lastName", e.target.value)} />
+        <Field label="Nazwisko" required>
+          <input className="input" required value={form.lastName} onChange={(e) => setField("lastName", e.target.value)} />
         </Field>
-        <Field label="PESEL">
-          <input className="input" value={form.pesel} onChange={(e) => setField("pesel", e.target.value)} />
+        <Field label="PESEL" required>
+          <input className="input" required value={form.pesel} onChange={(e) => setField("pesel", e.target.value)} />
         </Field>
-        <Field label="Stanowisko">
-          <input className="input" value={form.position} onChange={(e) => setField("position", e.target.value)} />
+        <Field label="Stanowisko" required>
+          <input className="input" required value={form.position} onChange={(e) => setField("position", e.target.value)} />
         </Field>
-        <Field label="Email">
-          <input className="input" type="email" value={form.email} onChange={(e) => setField("email", e.target.value)} />
+        <Field label="Email" required>
+          <input className="input" required type="email" value={form.email} onChange={(e) => setField("email", e.target.value)} />
         </Field>
-        <Field label="Telefon">
-          <input className="input" value={form.phone} onChange={(e) => setField("phone", e.target.value)} />
+        <Field label="Telefon" required>
+          <input className="input" required value={form.phone} onChange={(e) => setField("phone", e.target.value)} />
         </Field>
       </div>
       <div className="mt-4">
-        <Field label="Adres zamieszkania">
-          <input className="input" value={form.address} onChange={(e) => setField("address", e.target.value)} />
+        <Field label="Adres zamieszkania" required>
+          <input className="input" required value={form.address} onChange={(e) => setField("address", e.target.value)} />
         </Field>
       </div>
     </Modal>
@@ -349,6 +368,7 @@ function ImportModal({
   const [pending, setPending] = useState(false);
 
   async function submit() {
+    if (pending) return;
     if (!file) {
       setError("Wybierz plik XLSX.");
       return;
@@ -359,17 +379,15 @@ function ImportModal({
     body.set("file", file);
 
     try {
-      const response = await fetch("/api/employees/import", {
+      setResult(await apiFetch<{
+        imported: Employee[];
+        errors: { row: number; message: string }[];
+      }>("/api/employees/import", {
         method: "POST",
         body,
-      });
-      const json = await response.json();
-      if (!response.ok || !json.ok) {
-        throw new Error(json.message ?? "Import nie powiódł się.");
-      }
-      setResult(json.data);
+      }));
     } catch (err) {
-      setError((err as Error).message);
+      setError((err as Error).message || "Import nie powiódł się.");
     } finally {
       setPending(false);
     }
@@ -384,9 +402,9 @@ function ImportModal({
           <button className="btn btn-primary" onClick={onImported}>Zamknij i odśwież</button>
         ) : (
           <>
-            <button className="btn btn-outline" onClick={onClose}>Anuluj</button>
+            <button className="btn btn-outline" disabled={pending} onClick={onClose}>Anuluj</button>
             <button className="btn btn-primary" disabled={pending} onClick={submit}>
-              Importuj
+              {pending ? "Importowanie..." : "Importuj"}
             </button>
           </>
         )
@@ -399,12 +417,17 @@ function ImportModal({
           wiersze i pokaże ich listę.
         </div>
       </div>
-      <input
-        className="input mt-4"
-        type="file"
-        accept=".xlsx"
-        onChange={(event) => setFile(event.target.files?.[0] ?? null)}
-      />
+      <div className="mt-4">
+        <Field label="Plik XLSX" required>
+          <input
+            accept=".xlsx"
+            className="input"
+            onChange={(event) => setFile(event.target.files?.[0] ?? null)}
+            required
+            type="file"
+          />
+        </Field>
+      </div>
       {error ? <div className="mt-4"><ErrorState message={error} /></div> : null}
       {result ? (
         <div className="mt-4 col">

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Building2, Plus, Send } from "lucide-react";
 
 import { apiFetch, postJson } from "@/lib/client-api";
+import { validateEmail, validateRequired } from "@/lib/form-validation";
 import { formatDate } from "@/components/telemedi/format";
 import { ErrorState, Field, LoadingState, Modal } from "@/components/telemedi/ui";
 
@@ -154,6 +155,19 @@ function CreateCompanyModal({
   async function submit() {
     if (saving) return;
     setError("");
+
+    const validationError =
+      validateRequired([
+        { label: "Nazwa", value: form.name },
+        { label: "NIP", value: form.nip },
+        { label: "Adres", value: form.address },
+      ]) ?? validateEmail("Email kontaktowy", form.contactEmail);
+
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
     setSaving(true);
     try {
       await postJson("/api/admin/companies", form);
@@ -181,17 +195,19 @@ function CreateCompanyModal({
     >
       {error ? <ErrorState message={error} /> : null}
       <div className="grid-2">
-        {Object.entries({
-          name: "Nazwa",
-          shortName: "Nazwa skrócona",
-          nip: "NIP",
-          regon: "REGON",
-          contactPhone: "Telefon",
-          contactEmail: "Email kontaktowy",
-        }).map(([key, label]) => (
-          <Field label={label} key={key}>
+        {[
+          { key: "name", label: "Nazwa", required: true },
+          { key: "shortName", label: "Nazwa skrócona" },
+          { key: "nip", label: "NIP", required: true },
+          { key: "regon", label: "REGON" },
+          { key: "contactPhone", label: "Telefon" },
+          { key: "contactEmail", label: "Email kontaktowy", type: "email" },
+        ].map(({ key, label, required, type }) => (
+          <Field label={label} key={key} required={required}>
             <input
               className="input"
+              required={required}
+              type={type}
               value={form[key as keyof typeof form]}
               onChange={(event) => setForm({ ...form, [key]: event.target.value })}
             />
@@ -199,8 +215,8 @@ function CreateCompanyModal({
         ))}
       </div>
       <div className="mt-4">
-        <Field label="Adres">
-          <input className="input" value={form.address} onChange={(event) => setForm({ ...form, address: event.target.value })} />
+        <Field label="Adres" required>
+          <input className="input" required value={form.address} onChange={(event) => setForm({ ...form, address: event.target.value })} />
         </Field>
       </div>
     </Modal>
@@ -218,10 +234,20 @@ function InviteCompanyModal({
   const [role, setRole] = useState<"COORDINATOR" | "HR_STAFF">("COORDINATOR");
   const [inviteUrl, setInviteUrl] = useState("");
   const [error, setError] = useState("");
+  const [pending, setPending] = useState(false);
 
   async function submit() {
+    if (pending) return;
     setError("");
     setInviteUrl("");
+
+    const validationError = validateEmail("Email", email, true);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    setPending(true);
     try {
       const result = await postJson<{ inviteUrl: string }>(
         `/api/admin/companies/${company.id}/invitations`,
@@ -230,6 +256,8 @@ function InviteCompanyModal({
       setInviteUrl(result.inviteUrl);
     } catch (err) {
       setError((err as Error).message);
+    } finally {
+      setPending(false);
     }
   }
 
@@ -239,18 +267,20 @@ function InviteCompanyModal({
       onClose={onClose}
       footer={
         <>
-          <button className="btn btn-outline" onClick={onClose}>Zamknij</button>
-          <button className="btn btn-primary" onClick={submit}>Wygeneruj link</button>
+          <button className="btn btn-outline" onClick={onClose} disabled={pending}>Zamknij</button>
+          <button className="btn btn-primary" onClick={submit} disabled={pending}>
+            {pending ? "Generowanie..." : "Wygeneruj link"}
+          </button>
         </>
       }
     >
       {error ? <ErrorState message={error} /> : null}
       <div className="grid-2">
-        <Field label="Email">
-          <input className="input" value={email} onChange={(event) => setEmail(event.target.value)} />
+        <Field label="Email" required>
+          <input className="input" required type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
         </Field>
-        <Field label="Rola">
-          <select className="select" value={role} onChange={(event) => setRole(event.target.value as "COORDINATOR" | "HR_STAFF")}>
+        <Field label="Rola" required>
+          <select className="select" required value={role} onChange={(event) => setRole(event.target.value as "COORDINATOR" | "HR_STAFF")}>
             <option value="COORDINATOR">Koordynator</option>
             <option value="HR_STAFF">HR</option>
           </select>

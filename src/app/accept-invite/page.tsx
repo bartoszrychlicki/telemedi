@@ -20,6 +20,7 @@ function AcceptInviteContent() {
   const [pending, setPending] = useState(false);
 
   async function accept() {
+    if (pending) return;
     setPending(true);
     setMessage("");
     setError("");
