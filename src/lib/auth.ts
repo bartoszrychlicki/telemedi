@@ -24,10 +24,8 @@ const trustedOrigins = Array.from(
     [
       env.BETTER_AUTH_URL,
       env.NEXT_PUBLIC_APP_URL,
-      "https://telemedi-eight.vercel.app",
       process.env.VERCEL_URL,
       process.env.VERCEL_BRANCH_URL,
-      process.env.VERCEL_PROJECT_PRODUCTION_URL,
       "http://localhost:3000",
       "http://127.0.0.1:3000",
     ]

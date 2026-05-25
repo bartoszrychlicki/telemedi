@@ -86,6 +86,16 @@ npm run build
 
 ## Deployment Notes
 
+Canonical Vercel production URL:
+
+```text
+https://telemedi-br-cto.vercel.app
+```
+
+Use this URL for `BETTER_AUTH_URL` and `NEXT_PUBLIC_APP_URL`. Other Vercel
+aliases for this project, including `telemedi-eight.vercel.app`, should redirect
+to the canonical URL.
+
 Vercel needs these variables in Development, Preview, and Production:
 
 - `DATABASE_URL`
