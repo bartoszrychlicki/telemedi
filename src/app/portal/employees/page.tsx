@@ -44,25 +44,28 @@ function compareDates(left: string, right: string) {
   return (Number.isNaN(leftTime) ? 0 : leftTime) - (Number.isNaN(rightTime) ? 0 : rightTime);
 }
 
-function compareEmployees(left: Employee, right: Employee, key: SortKey) {
-  const fallback =
+function compareEmployeeName(left: Employee, right: Employee) {
+  return (
     compareText(left.lastName, right.lastName) ||
     compareText(left.firstName, right.firstName) ||
-    compareText(left.id, right.id);
+    compareText(left.id, right.id)
+  );
+}
 
+function compareEmployees(left: Employee, right: Employee, key: SortKey) {
   switch (key) {
     case "employee":
-      return fallback;
+      return compareEmployeeName(left, right);
     case "position":
-      return compareText(left.position, right.position) || fallback;
+      return compareText(left.position, right.position);
     case "pesel":
-      return compareText(left.pesel, right.pesel) || fallback;
+      return compareText(left.pesel, right.pesel);
     case "contact":
-      return compareText(left.email, right.email) || compareText(left.phone, right.phone) || fallback;
+      return compareText(left.email, right.email) || compareText(left.phone, right.phone);
     case "referrals":
-      return compareNumbers(left._count?.referrals ?? 0, right._count?.referrals ?? 0) || fallback;
+      return compareNumbers(left._count?.referrals ?? 0, right._count?.referrals ?? 0);
     case "createdAt":
-      return compareDates(left.createdAt, right.createdAt) || fallback;
+      return compareDates(left.createdAt, right.createdAt);
   }
 }
 
@@ -112,7 +115,10 @@ export default function EmployeesPage() {
 
   const sorted = useMemo(() => {
     const direction = sort.direction === "asc" ? 1 : -1;
-    return [...filtered].sort((left, right) => compareEmployees(left, right, sort.key) * direction);
+    return [...filtered].sort((left, right) => {
+      const result = compareEmployees(left, right, sort.key);
+      return result === 0 ? compareEmployeeName(left, right) : result * direction;
+    });
   }, [filtered, sort]);
 
   function sortBy(key: SortKey) {
