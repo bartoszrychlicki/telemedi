@@ -18,21 +18,42 @@ export async function apiFetch<T>(
   input: RequestInfo | URL,
   init?: RequestInit,
 ): Promise<T> {
-  const response = await fetch(input, {
-    ...init,
-    headers: {
-      ...(init?.body instanceof FormData
-        ? {}
-        : { "content-type": "application/json" }),
-      ...init?.headers,
-    },
-  });
+  let response: Response;
+
+  try {
+    response = await fetch(input, {
+      ...init,
+      headers: {
+        ...(init?.body instanceof FormData
+          ? {}
+          : { "content-type": "application/json" }),
+        ...init?.headers,
+      },
+    });
+  } catch {
+    throw new ClientApiError(
+      0,
+      "network_error",
+      "Nie udało się połączyć z serwerem. Odśwież stronę i spróbuj ponownie.",
+    );
+  }
 
   if (response.status === 204) {
     return undefined as T;
   }
 
-  const envelope = (await response.json()) as ApiEnvelope<T>;
+  let envelope: ApiEnvelope<T>;
+
+  try {
+    envelope = (await response.json()) as ApiEnvelope<T>;
+  } catch {
+    throw new ClientApiError(
+      response.status,
+      "invalid_response",
+      "Serwer zwrócił nieprawidłową odpowiedź. Odśwież stronę i spróbuj ponownie.",
+    );
+  }
+
   if (!response.ok || !envelope.ok) {
     const message =
       "message" in envelope ? envelope.message : "Operacja nie powiodła się.";

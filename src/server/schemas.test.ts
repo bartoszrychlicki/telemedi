@@ -1,12 +1,42 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  companyCreateSchema,
+  companySettingsSchema,
   employeeSchema,
   referralCreateSchema,
   referralStatusUpdateSchema,
 } from "@/server/schemas";
 
 describe("request schemas", () => {
+  it("allows company REGON to be left blank", () => {
+    const createResult = companyCreateSchema.safeParse({
+      name: "ACME Sp. z o.o.",
+      shortName: "ACME",
+      nip: "9571130261",
+      regon: "",
+      address: "Topolowa 2/7, 80-322 Gdansk",
+      contactPhone: "",
+      contactEmail: "",
+    });
+    const settingsResult = companySettingsSchema.safeParse({
+      name: "ACME Sp. z o.o.",
+      shortName: "ACME",
+      nip: "9571130261",
+      regon: "",
+      address: "Topolowa 2/7, 80-322 Gdansk",
+      contactPhone: "",
+      contactEmail: "",
+      pdfIssuedPlace: "",
+      pdfSignatoryName: "",
+      pdfSignatoryTitle: "",
+      pdfFooterNote: "",
+    });
+
+    expect(createResult.success).toBe(true);
+    expect(settingsResult.success).toBe(true);
+  });
+
   it("requires document data when employee has no PESEL", () => {
     const result = employeeSchema.safeParse({
       firstName: "Anna",

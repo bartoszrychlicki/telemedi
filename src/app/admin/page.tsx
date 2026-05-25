@@ -149,14 +149,19 @@ function CreateCompanyModal({
 }) {
   const [form, setForm] = useState(emptyCompany);
   const [error, setError] = useState("");
+  const [saving, setSaving] = useState(false);
 
   async function submit() {
+    if (saving) return;
     setError("");
+    setSaving(true);
     try {
       await postJson("/api/admin/companies", form);
       onSaved();
     } catch (err) {
       setError((err as Error).message);
+    } finally {
+      setSaving(false);
     }
   }
 
@@ -167,8 +172,10 @@ function CreateCompanyModal({
       wide
       footer={
         <>
-          <button className="btn btn-outline" onClick={onClose}>Anuluj</button>
-          <button className="btn btn-primary" onClick={submit}>Utwórz</button>
+          <button className="btn btn-outline" onClick={onClose} disabled={saving}>Anuluj</button>
+          <button className="btn btn-primary" onClick={submit} disabled={saving}>
+            {saving ? "Tworzenie..." : "Utwórz"}
+          </button>
         </>
       }
     >

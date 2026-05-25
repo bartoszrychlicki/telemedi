@@ -54,15 +54,18 @@ export async function createCompany(input: CompanyCreateInput, adminUserId: stri
         createdAt: new Date(),
         metadata: JSON.stringify({
           nip: input.nip,
-          regon: input.regon,
+          regon: input.regon ?? null,
         }),
       },
     });
 
     const company = await tx.company.create({
       data: {
-        ...input,
+        name: input.name,
         shortName: input.shortName ?? null,
+        nip: input.nip,
+        regon: input.regon ?? "",
+        address: input.address,
         contactPhone: input.contactPhone ?? null,
         contactEmail: input.contactEmail ?? null,
         pdfIssuedPlace: input.shortName ?? input.name,

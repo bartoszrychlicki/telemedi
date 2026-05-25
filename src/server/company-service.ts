@@ -51,7 +51,7 @@ export async function updateCompanySettings(
       name: input.name,
       shortName: input.shortName ?? null,
       nip: input.nip,
-      regon: input.regon,
+      regon: input.regon ?? "",
       address: input.address,
       contactPhone: input.contactPhone ?? null,
       contactEmail: input.contactEmail ?? null,
