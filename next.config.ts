@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const canonicalProductionUrl = "https://telemedi-br-cto.vercel.app";
+const canonicalProductionUrl = "https://telemedi-eight.vercel.app";
 
 const nextConfig: NextConfig = {
   async redirects() {
@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
         has: [
           {
             type: "host",
-            value: "telemedi-(?!br-cto\\.vercel\\.app$).*\\.vercel\\.app",
+            value: "telemedi-(?!eight\\.vercel\\.app$).*\\.vercel\\.app",
           },
         ],
         destination: `${canonicalProductionUrl}/:path*`,

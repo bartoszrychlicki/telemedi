@@ -22,6 +22,7 @@ DATABASE_URL="pooled Neon connection string"
 DIRECT_URL="direct Neon connection string"
 BETTER_AUTH_SECRET="32+ random characters"
 BETTER_AUTH_URL="http://localhost:3000"
+BETTER_AUTH_API_KEY="Better Auth Dash API key"
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 ```
 
@@ -89,11 +90,11 @@ npm run build
 Canonical Vercel production URL:
 
 ```text
-https://telemedi-br-cto.vercel.app
+https://telemedi-eight.vercel.app
 ```
 
 Use this URL for `BETTER_AUTH_URL` and `NEXT_PUBLIC_APP_URL`. Other Vercel
-aliases for this project, including `telemedi-eight.vercel.app`, should redirect
+aliases for this project should redirect
 to the canonical URL.
 
 Vercel needs these variables in Development, Preview, and Production:
@@ -102,6 +103,7 @@ Vercel needs these variables in Development, Preview, and Production:
 - `DIRECT_URL`
 - `BETTER_AUTH_SECRET`
 - `BETTER_AUTH_URL`
+- `BETTER_AUTH_API_KEY`
 - `NEXT_PUBLIC_APP_URL`
 - optional demo seed values from `.env.example`
 

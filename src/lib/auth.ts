@@ -1,4 +1,5 @@
 import { prismaAdapter } from "better-auth/adapters/prisma";
+import { dash } from "@better-auth/infra";
 import { betterAuth } from "better-auth";
 import { nextCookies } from "better-auth/next-js";
 import { organization } from "better-auth/plugins";
@@ -60,6 +61,9 @@ export const auth = betterAuth({
     modelName: "Verification",
   },
   plugins: [
+    dash({
+      apiKey: env.BETTER_AUTH_API_KEY,
+    }),
     organization({
       allowUserToCreateOrganization: false,
       creatorRole: "owner",

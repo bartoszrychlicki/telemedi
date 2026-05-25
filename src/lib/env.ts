@@ -11,6 +11,7 @@ const serverEnvSchema = z.object({
     .min(32)
     .default("telemedi-local-dev-secret-change-before-production"),
   BETTER_AUTH_URL: z.string().url().default("http://localhost:3000"),
+  BETTER_AUTH_API_KEY: z.string().min(1).optional(),
   NEXT_PUBLIC_APP_URL: z.string().url().default("http://localhost:3000"),
   TELEMEDI_DEMO_SEED: z.string().default("true"),
   TELEMEDI_ADMIN_EMAIL: z.email().default("admin@telemedi.pl"),
@@ -26,6 +27,7 @@ const parsedEnv = serverEnvSchema.parse({
   DIRECT_URL: process.env.DIRECT_URL,
   BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
   BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
+  BETTER_AUTH_API_KEY: process.env.BETTER_AUTH_API_KEY,
   NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
   TELEMEDI_DEMO_SEED: process.env.TELEMEDI_DEMO_SEED,
   TELEMEDI_ADMIN_EMAIL: process.env.TELEMEDI_ADMIN_EMAIL,
@@ -52,6 +54,7 @@ export function missingProductionEnv(): string[] {
     "DIRECT_URL",
     "BETTER_AUTH_SECRET",
     "BETTER_AUTH_URL",
+    "BETTER_AUTH_API_KEY",
     "NEXT_PUBLIC_APP_URL",
   ].filter((key) => !process.env[key]);
 }
