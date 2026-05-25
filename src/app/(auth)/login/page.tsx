@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { authClient } from "@/lib/auth-client";
 import { apiFetch } from "@/lib/client-api";
 import { validateEmail, validateRequired } from "@/lib/form-validation";
 import { Field } from "@/components/telemedi/ui";
@@ -38,13 +39,12 @@ export default function LoginPage() {
     setMessage("");
 
     try {
-      const response = await fetch("/api/auth/sign-in/email", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email, password }),
+      const result = await authClient.signIn.email({
+        email,
+        password,
       });
 
-      if (!response.ok) {
+      if (result.error) {
         setMessage("Nie udało się zalogować. Sprawdź dane demo i seed bazy.");
         return;
       }

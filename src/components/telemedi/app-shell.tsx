@@ -19,6 +19,7 @@ import {
   Users,
 } from "lucide-react";
 
+import { authClient } from "@/lib/auth-client";
 import { apiFetch } from "@/lib/client-api";
 import { initials, roleLabels } from "@/components/telemedi/format";
 import { ErrorState, LoadingState } from "@/components/telemedi/ui";
@@ -89,7 +90,7 @@ export function AppShell({
 
   async function signOut() {
     setError("");
-    await fetch("/api/auth/sign-out", { method: "POST" }).catch(() => null);
+    await authClient.signOut().catch(() => null);
     router.replace("/login");
   }
 

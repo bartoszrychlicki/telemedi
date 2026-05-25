@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useState, type ReactNode } from "react";
 
+import { authClient } from "@/lib/auth-client";
+
 export default function AcceptInvitePage() {
   return (
     <Suspense fallback={<InviteShell>Ładowanie zaproszenia...</InviteShell>}>
@@ -25,15 +27,16 @@ function AcceptInviteContent() {
     setMessage("");
     setError("");
     try {
-      const response = await fetch("/api/auth/organization/accept-invitation", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ invitationId }),
-      });
-      if (!response.ok) {
-        const body = await response.json().catch(() => null);
+      const response = await authClient.$fetch(
+        "/organization/accept-invitation",
+        {
+          method: "POST",
+          body: { invitationId },
+        },
+      );
+      if (response.error) {
         throw new Error(
-          body?.message ??
+          response.error.message ??
             "Nie udało się przyjąć zaproszenia. Zaloguj się kontem z adresu zaproszenia.",
         );
       }
