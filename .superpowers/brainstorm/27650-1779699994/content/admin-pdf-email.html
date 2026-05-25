@@ -1,0 +1,125 @@
+<h2>Sekcja 6 — Admin Telemedi + PDF + mock email</h2>
+<p class="subtitle">Trzy ostatnie elementy systemu. Zatwierdź każdy lub wskaż zmiany.</p>
+
+<div style="display:flex; flex-direction:column; gap:16px;">
+
+  <!-- ADMIN PANEL -->
+  <div class="mockup">
+    <div class="mockup-header">A — Panel Telemedi Admin (/admin)</div>
+    <div class="mockup-body" style="font-size:11px; color:#334155;">
+      <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
+
+        <!-- Sidebar admin -->
+        <div style="width:140px; background:#0f172a; border-radius:6px; padding:10px 0; flex-shrink:0;">
+          <div style="padding:8px 12px; color:#94a3b8; font-size:10px; font-weight:700; border-bottom:1px solid #1e293b; margin-bottom:6px;">TELEMEDI ADMIN</div>
+          <div style="padding:7px 12px; background:rgba(255,255,255,0.08); color:#fff; font-size:10px; display:flex; gap:6px;">🏢 Firmy</div>
+          <div style="padding:7px 12px; color:#64748b; font-size:10px; display:flex; gap:6px;">📊 Statystyki</div>
+          <div style="padding:7px 12px; color:#64748b; font-size:10px; display:flex; gap:6px;">⚙️ Czynniki sys.</div>
+        </div>
+
+        <!-- Lista firm -->
+        <div style="flex:1; min-width:260px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <div style="font-weight:700; font-size:13px;">Firmy klientów</div>
+            <div style="background:#2563eb; color:#fff; border-radius:6px; padding:6px 12px; font-size:10px; font-weight:600; cursor:pointer;">+ Dodaj firmę</div>
+          </div>
+
+          <div style="border:1px solid #e2e8f0; border-radius:8px; overflow:hidden;">
+            <div style="display:grid; grid-template-columns:2fr 1fr 1fr 0.8fr; background:#f8fafc; padding:7px 12px; font-size:9px; font-weight:600; text-transform:uppercase; color:#64748b; border-bottom:1px solid #e2e8f0;">
+              <div>Firma</div><div>NIP</div><div>Koordynator</div><div></div>
+            </div>
+            <div style="display:grid; grid-template-columns:2fr 1fr 1fr 0.8fr; padding:9px 12px; border-bottom:1px solid #f1f5f9; align-items:center;">
+              <div><div style="font-weight:600;">E. Wedel S.A.</div><div style="font-size:9px; color:#64748b;">14 pracowników · 3 aktywne</div></div>
+              <div style="font-size:10px; color:#64748b;">527-000-12-34</div>
+              <div style="font-size:10px; color:#16a34a;">● aktywny</div>
+              <div style="font-size:10px; color:#2563eb; cursor:pointer;">→ wejdź</div>
+            </div>
+            <div style="display:grid; grid-template-columns:2fr 1fr 1fr 0.8fr; padding:9px 12px; border-bottom:1px solid #f1f5f9; align-items:center;">
+              <div><div style="font-weight:600;">Budimex SA</div><div style="font-size:9px; color:#64748b;">47 pracowników · 12 aktywnych</div></div>
+              <div style="font-size:10px; color:#64748b;">526-10-10-026</div>
+              <div style="font-size:10px; color:#16a34a;">● aktywny</div>
+              <div style="font-size:10px; color:#2563eb; cursor:pointer;">→ wejdź</div>
+            </div>
+            <div style="display:grid; grid-template-columns:2fr 1fr 1fr 0.8fr; padding:9px 12px; align-items:center;">
+              <div><div style="font-weight:600;">Nowa Firma Sp. z o.o.</div><div style="font-size:9px; color:#f59e0b;">Oczekuje na koordynatora</div></div>
+              <div style="font-size:10px; color:#64748b;">—</div>
+              <div style="font-size:10px; color:#f59e0b;">⏳ invite wysłany</div>
+              <div style="font-size:10px; color:#2563eb; cursor:pointer;">⟳ wyślij link</div>
+            </div>
+          </div>
+
+          <!-- Modal "Dodaj firmę" hint -->
+          <div style="margin-top:10px; background:#f0f9ff; border:1px solid #bae6fd; border-radius:6px; padding:8px 10px; font-size:10px; color:#0369a1;">
+            <strong>Modal "Dodaj firmę":</strong> Nazwa · NIP · REGON · Adres · Telefon → generuje invite link dla Koordynatora → przycisk "Kopiuj link".
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:16px; flex-wrap:wrap;">
+
+    <!-- PDF -->
+    <div class="mockup" style="flex:1; min-width:260px;">
+      <div class="mockup-header">B — Generowanie PDF skierowania</div>
+      <div class="mockup-body" style="font-size:11px; color:#334155;">
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px; font-family:serif; font-size:10px; line-height:1.6;">
+          <div style="text-align:center; font-weight:700; font-size:11px; margin-bottom:8px; border-bottom:1px solid #334155; padding-bottom:6px;">SKIEROWANIE NA BADANIA LEKARSKIE</div>
+          <div style="margin-bottom:6px;"><strong>Pracodawca:</strong> E. Wedel S.A.</div>
+          <div style="margin-bottom:2px; font-size:9px; color:#64748b;">ul. Zamenhoffa 16, 01-748 Warszawa · NIP: 527-000-12-34 · REGON: 010001235</div>
+          <div style="margin-bottom:6px; margin-top:4px;"><strong>Pracownik:</strong> Anna Kowalska, PESEL: 85010212345</div>
+          <div style="margin-bottom:2px; font-size:9px; color:#64748b;">ul. Mokotowska 5/12, 00-640 Warszawa</div>
+          <div style="margin-bottom:6px; margin-top:4px;"><strong>Stanowisko:</strong> Księgowa &nbsp;|&nbsp; <strong>Rodzaj badania:</strong> Wstępne</div>
+          <div style="margin-bottom:4px;"><strong>Warunki pracy:</strong> Praca przy komputerze 8h/dobę, obsługa klienta tel.</div>
+          <div style="margin-bottom:6px; font-size:9px;">
+            <div style="font-weight:700; margin-bottom:2px;">Czynniki narażeń:</div>
+            <div><strong>Fizyczne:</strong> praca z monitorem, wymuszona pozycja</div>
+            <div><strong>Chemiczne:</strong> —</div>
+            <div><strong>Biologiczne:</strong> —</div>
+            <div><strong>Pyły:</strong> —</div>
+            <div><strong>Inne:</strong> —</div>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-top:10px; border-top:1px solid #e2e8f0; padding-top:8px; font-size:9px;">
+            <div>Data wystawienia: <strong>20.05.2026</strong></div>
+            <div style="text-align:right; color:#94a3b8;">[podpis i pieczęć pracodawcy]</div>
+          </div>
+        </div>
+        <div style="margin-top:8px; font-size:10px; color:#64748b; background:#f1f5f9; border-radius:6px; padding:7px 10px;">
+          <strong>Tech:</strong> <code>@react-pdf/renderer</code> — generuje PDF server-side (Next.js API Route), pobierany jako <code>attachment</code>. Wszystkie 5 kategorii zawsze widoczne, puste = "—".
+        </div>
+      </div>
+    </div>
+
+    <!-- MOCK EMAIL -->
+    <div class="mockup" style="flex:1; min-width:260px;">
+      <div class="mockup-header">C — Mock powiadomienia email do pracownika</div>
+      <div class="mockup-body" style="font-size:11px; color:#334155;">
+
+        <div style="background:#fff; border:1px solid #e2e8f0; border-radius:6px; overflow:hidden; margin-bottom:10px;">
+          <div style="background:#f8fafc; padding:8px 10px; border-bottom:1px solid #e2e8f0; font-size:10px;">
+            <div><strong>Do:</strong> anna.kowalska@wedel.pl</div>
+            <div><strong>Temat:</strong> Badanie medycyny pracy — termin i miejsce</div>
+          </div>
+          <div style="padding:10px; font-size:10px; line-height:1.6; color:#334155;">
+            <div>Szanowna Pani Anno,</div>
+            <div style="margin-top:6px;">Informujemy, że Pani badanie profilaktyczne zostało umówione:</div>
+            <div style="margin:8px 0; background:#f0fdf4; border-left:3px solid #16a34a; padding:6px 10px; border-radius:0 4px 4px 0;">
+              <div>📍 <strong>CM Medicover Wola</strong></div>
+              <div>📅 <strong>28 maja 2026, godz. 10:00</strong></div>
+            </div>
+            <div style="font-size:9px; color:#64748b;">Prosimy zabrać ze sobą dowód tożsamości i skierowanie od pracodawcy.</div>
+            <div style="margin-top:8px; font-size:9px; color:#94a3b8;">— Telemedi / dział medycyny pracy</div>
+          </div>
+        </div>
+
+        <div style="background:#fefce8; border:1px solid #fde047; border-radius:6px; padding:8px 10px; font-size:10px; color:#713f12;">
+          <strong>Mock behavior:</strong> kliknięcie "Wyślij" → zapis timestampu do DB (<code>notificationSentAt</code>) → UI pokazuje "Wysłano: 20.05.2026 14:32". Przycisk staje się disabled. Faktyczny SMTP do podpięcia w v2 — <code>nodemailer</code> lub <code>Resend</code>.
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<p class="subtitle" style="margin-top:16px;">Czy wszystkie trzy elementy wyglądają dobrze? Możemy wtedy zamknąć design i napisać spec.</p>

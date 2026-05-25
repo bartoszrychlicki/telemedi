@@ -1,0 +1,128 @@
+<h2>Krok 1 — Multi-select pracowników</h2>
+<p class="subtitle">Zaktualizowany widok: wyszukaj i dodaj wielu pracowników do jednego skierowania zbiorczego.</p>
+
+<div style="max-width:520px; margin:0 auto;">
+<div class="mockup">
+  <div class="mockup-header">Krok 1 / 2 — Pracownicy i rodzaj badania</div>
+  <div class="mockup-body" style="font-size:11px; color:#334155;">
+
+    <!-- Progress -->
+    <div style="display:flex; gap:6px; align-items:center; margin-bottom:18px;">
+      <div style="background:#2563eb; color:#fff; border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:10px; flex-shrink:0;">1</div>
+      <div style="height:2px; flex:1; background:#2563eb;"></div>
+      <div style="background:#e2e8f0; color:#94a3b8; border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:10px; flex-shrink:0;">2</div>
+      <div style="height:2px; flex:1; background:#e2e8f0;"></div>
+      <div style="font-size:9px; color:#94a3b8; flex-shrink:0;">Generuj</div>
+    </div>
+
+    <!-- Wyszukiwarka pracowników -->
+    <div style="margin-bottom:6px;">
+      <div style="font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:5px;">Pracownicy *</div>
+      <div style="background:#fff; border:1px solid #2563eb; border-radius:6px; padding:8px 10px; display:flex; align-items:center; gap:6px;">
+        <span style="color:#2563eb;">🔍</span>
+        <span style="color:#94a3b8;">Szukaj po nazwisku lub stanowisku...</span>
+      </div>
+
+      <!-- Dropdown wyników (otwarty) -->
+      <div style="border:1px solid #e2e8f0; border-top:none; border-radius:0 0 6px 6px; background:#fff; overflow:hidden;">
+        <div style="padding:6px 10px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; border-bottom:1px solid #f1f5f9;">
+          <div>
+            <div style="font-weight:600;">Jan Nowak</div>
+            <div style="font-size:9px; color:#64748b;">Magazynier · jan.nowak@wedel.pl</div>
+          </div>
+          <div style="background:#eff6ff; color:#2563eb; border-radius:10px; padding:2px 8px; font-size:9px; font-weight:600;">+ Dodaj</div>
+        </div>
+        <div style="padding:6px 10px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; border-bottom:1px solid #f1f5f9; background:#f8fafc;">
+          <div>
+            <div style="font-weight:600;">Joanna Nowak</div>
+            <div style="font-size:9px; color:#64748b;">Asystentka · j.nowak@wedel.pl</div>
+          </div>
+          <div style="background:#eff6ff; color:#2563eb; border-radius:10px; padding:2px 8px; font-size:9px; font-weight:600;">+ Dodaj</div>
+        </div>
+        <div style="padding:6px 10px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+          <div>
+            <div style="font-weight:600;">Marek Nowakowski</div>
+            <div style="font-size:9px; color:#64748b;">Technolog · m.nowakowski@wedel.pl</div>
+          </div>
+          <div style="background:#eff6ff; color:#2563eb; border-radius:10px; padding:2px 8px; font-size:9px; font-weight:600;">+ Dodaj</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista wybranych pracowników -->
+    <div style="margin-bottom:16px; margin-top:10px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+        <div style="font-size:10px; color:#64748b;">Wybrani pracownicy</div>
+        <div style="background:#2563eb; color:#fff; border-radius:10px; padding:2px 10px; font-size:10px; font-weight:700;">3</div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:6px; padding:7px 10px; display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <span style="font-weight:600;">Anna Kowalska</span>
+            <span style="color:#64748b; font-size:9px; margin-left:6px;">Księgowa</span>
+          </div>
+          <span style="color:#94a3b8; cursor:pointer; font-size:13px;">×</span>
+        </div>
+        <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:6px; padding:7px 10px; display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <span style="font-weight:600;">Piotr Wiśniewski</span>
+            <span style="color:#64748b; font-size:9px; margin-left:6px;">Kierownik</span>
+          </div>
+          <span style="color:#94a3b8; cursor:pointer; font-size:13px;">×</span>
+        </div>
+        <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:6px; padding:7px 10px; display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <span style="font-weight:600;">Maria Zielińska</span>
+            <span style="color:#64748b; font-size:9px; margin-left:6px;">Specjalista ds. HR</span>
+          </div>
+          <span style="color:#94a3b8; cursor:pointer; font-size:13px;">×</span>
+        </div>
+      </div>
+
+      <!-- Baner informacyjny -->
+      <div style="margin-top:8px; background:#fefce8; border:1px solid #fde047; border-radius:6px; padding:8px 10px; display:flex; gap:7px; align-items:flex-start;">
+        <span style="font-size:13px; flex-shrink:0;">⚠️</span>
+        <div style="font-size:10px; color:#713f12; line-height:1.4;">
+          <strong>Skierowanie zbiorcze:</strong> wszyscy 3 pracownicy otrzymają <strong>identyczne</strong> skierowania — ten sam rodzaj badania i te same czynniki narażeń. Upewnij się, że warunki pracy są dla nich jednakowe.
+        </div>
+      </div>
+    </div>
+
+    <!-- Rodzaj badania -->
+    <div style="margin-bottom:14px;">
+      <div style="font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:5px;">Rodzaj badania *</div>
+      <div style="display:flex; flex-direction:column; gap:5px;">
+        <label style="display:flex; align-items:center; gap:8px; background:#eff6ff; border:2px solid #2563eb; border-radius:8px; padding:9px 12px; cursor:pointer;">
+          <div style="width:13px; height:13px; border-radius:50%; background:#2563eb; border:3px solid #fff; box-shadow:0 0 0 2px #2563eb; flex-shrink:0;"></div>
+          <div><div style="font-weight:600;">Wstępne</div><div style="font-size:9px; color:#64748b;">Przed rozpoczęciem pracy</div></div>
+        </label>
+        <label style="display:flex; align-items:center; gap:8px; background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:9px 12px; cursor:pointer;">
+          <div style="width:13px; height:13px; border-radius:50%; border:2px solid #cbd5e1; flex-shrink:0;"></div>
+          <div><div style="font-weight:600;">Okresowe</div><div style="font-size:9px; color:#64748b;">W trakcie zatrudnienia</div></div>
+        </label>
+        <label style="display:flex; align-items:center; gap:8px; background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:9px 12px; cursor:pointer;">
+          <div style="width:13px; height:13px; border-radius:50%; border:2px solid #cbd5e1; flex-shrink:0;"></div>
+          <div><div style="font-weight:600;">Kontrolne</div><div style="font-size:9px; color:#64748b;">Po chorobie powyżej 30 dni</div></div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Szablon -->
+    <div style="margin-bottom:18px;">
+      <div style="font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:5px;">Szablon <span style="font-weight:400; color:#94a3b8;">(opcjonalny)</span></div>
+      <div style="background:#fff; border:1px solid #cbd5e1; border-radius:6px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center; color:#94a3b8;">
+        <span>Wybierz szablon...</span><span>▾</span>
+      </div>
+      <div style="font-size:9px; color:#94a3b8; margin-top:3px;">Auto-wypełni czynniki i opis pracy w kroku 2</div>
+    </div>
+
+    <!-- CTA -->
+    <div style="display:flex; justify-content:flex-end;">
+      <div style="background:#2563eb; color:#fff; border-radius:8px; padding:10px 22px; font-weight:600; font-size:12px; cursor:pointer;">Dalej — Czynniki narażeń →</div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<p class="subtitle" style="margin-top:16px;">Krok 2 pozostaje bez zmian. Czy ten multi-select wygląda dobrze?</p>

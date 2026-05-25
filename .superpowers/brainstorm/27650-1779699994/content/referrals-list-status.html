@@ -1,0 +1,197 @@
+<h2>Sekcja 5 — Lista skierowań + widok szczegółów + mock webhook</h2>
+<p class="subtitle">Dwa główne widoki modułu Skierowania.</p>
+
+<div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
+
+  <!-- LISTA SKIEROWAŃ -->
+  <div class="mockup" style="flex:1.2; min-width:360px;">
+    <div class="mockup-header">Widok: Lista skierowań</div>
+    <div class="mockup-body" style="font-size:11px; color:#334155; padding:12px;">
+
+      <!-- Toolbar -->
+      <div style="display:flex; gap:8px; margin-bottom:12px; align-items:center; flex-wrap:wrap;">
+        <div style="flex:1; background:#fff; border:1px solid #cbd5e1; border-radius:6px; padding:6px 10px; display:flex; gap:6px; align-items:center; min-width:120px;">
+          <span style="color:#94a3b8;">🔍</span><span style="color:#94a3b8; font-size:10px;">Szukaj pracownika...</span>
+        </div>
+        <div style="background:#fff; border:1px solid #cbd5e1; border-radius:6px; padding:6px 10px; font-size:10px; color:#64748b; white-space:nowrap;">Status ▾</div>
+        <div style="background:#fff; border:1px solid #cbd5e1; border-radius:6px; padding:6px 10px; font-size:10px; color:#64748b; white-space:nowrap;">Rodzaj ▾</div>
+        <div style="background:#2563eb; color:#fff; border-radius:6px; padding:6px 12px; font-size:10px; font-weight:600; white-space:nowrap; margin-left:auto;">+ Nowe skierowanie</div>
+      </div>
+
+      <!-- Tabela -->
+      <div style="border:1px solid #e2e8f0; border-radius:8px; overflow:hidden;">
+        <!-- Nagłówki -->
+        <div style="display:grid; grid-template-columns:1.8fr 0.8fr 0.8fr 1.2fr 0.5fr; gap:0; background:#f8fafc; padding:7px 12px; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; border-bottom:1px solid #e2e8f0;">
+          <div>Pracownik</div>
+          <div>Rodzaj</div>
+          <div>Termin</div>
+          <div>Status</div>
+          <div></div>
+        </div>
+
+        <!-- Wiersze -->
+        <div style="display:grid; grid-template-columns:1.8fr 0.8fr 0.8fr 1.2fr 0.5fr; padding:9px 12px; border-bottom:1px solid #f1f5f9; align-items:center; background:#fff;">
+          <div><div style="font-weight:600;">Anna Kowalska</div><div style="font-size:9px; color:#64748b;">Księgowa</div></div>
+          <div style="font-size:10px;">Wstępne</div>
+          <div style="font-size:10px; color:#dc2626; font-weight:600;">30.05</div>
+          <div><span style="background:#fef3c7; color:#92400e; border-radius:10px; padding:2px 8px; font-size:9px; font-weight:600;">W trakcie umawiania</span></div>
+          <div style="color:#2563eb; font-size:10px; cursor:pointer;">→</div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1.8fr 0.8fr 0.8fr 1.2fr 0.5fr; padding:9px 12px; border-bottom:1px solid #f1f5f9; align-items:center; background:#fff;">
+          <div><div style="font-weight:600;">Jan Nowak</div><div style="font-size:9px; color:#64748b;">Magazynier</div></div>
+          <div style="font-size:10px;">Okresowe</div>
+          <div style="font-size:10px;">15.06</div>
+          <div><span style="background:#dcfce7; color:#166534; border-radius:10px; padding:2px 8px; font-size:9px; font-weight:600;">Badania umówione ✓</span></div>
+          <div style="color:#2563eb; font-size:10px; cursor:pointer;">→</div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1.8fr 0.8fr 0.8fr 1.2fr 0.5fr; padding:9px 12px; border-bottom:1px solid #f1f5f9; align-items:center; background:#fff;">
+          <div><div style="font-weight:600;">Maria Zielińska</div><div style="font-size:9px; color:#64748b;">Specjalista HR</div></div>
+          <div style="font-size:10px;">Wstępne</div>
+          <div style="font-size:10px;">20.06</div>
+          <div><span style="background:#f1f5f9; color:#475569; border-radius:10px; padding:2px 8px; font-size:9px; font-weight:600;">Wysłane</span></div>
+          <div style="color:#2563eb; font-size:10px; cursor:pointer;">→</div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1.8fr 0.8fr 0.8fr 1.2fr 0.5fr; padding:9px 12px; border-bottom:1px solid #f1f5f9; align-items:center; background:#fff;">
+          <div><div style="font-weight:600;">Piotr Wiśniewski</div><div style="font-size:9px; color:#64748b;">Kierownik</div></div>
+          <div style="font-size:10px;">Kontrolne</div>
+          <div style="font-size:10px;">10.07</div>
+          <div><span style="background:#ede9fe; color:#5b21b6; border-radius:10px; padding:2px 8px; font-size:9px; font-weight:600;">Zaświadczenie ✓</span></div>
+          <div style="color:#2563eb; font-size:10px; cursor:pointer;">→</div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1.8fr 0.8fr 0.8fr 1.2fr 0.5fr; padding:9px 12px; align-items:center; background:#fff;">
+          <div><div style="font-weight:600;">Tomasz Krawczyk</div><div style="font-size:9px; color:#64748b;">Technolog</div></div>
+          <div style="font-size:10px;">Wstępne</div>
+          <div style="font-size:10px; color:#64748b;">—</div>
+          <div><span style="background:#f8fafc; color:#94a3b8; border-radius:10px; padding:2px 8px; font-size:9px; border:1px dashed #cbd5e1;">Draft</span></div>
+          <div style="color:#2563eb; font-size:10px; cursor:pointer;">→</div>
+        </div>
+      </div>
+
+      <!-- Legenda statusów -->
+      <div style="margin-top:10px; display:flex; gap:6px; flex-wrap:wrap;">
+        <span style="font-size:9px; color:#64748b;">Statusy:</span>
+        <span style="background:#f8fafc; color:#94a3b8; border-radius:8px; padding:1px 6px; font-size:9px; border:1px dashed #cbd5e1;">Draft</span>
+        <span style="background:#f1f5f9; color:#475569; border-radius:8px; padding:1px 6px; font-size:9px;">Wysłane</span>
+        <span style="background:#fef3c7; color:#92400e; border-radius:8px; padding:1px 6px; font-size:9px;">W trakcie umawiania</span>
+        <span style="background:#dcfce7; color:#166534; border-radius:8px; padding:1px 6px; font-size:9px;">Umówione</span>
+        <span style="background:#dbeafe; color:#1e40af; border-radius:8px; padding:1px 6px; font-size:9px;">Badania odbyte</span>
+        <span style="background:#ede9fe; color:#5b21b6; border-radius:8px; padding:1px 6px; font-size:9px;">Zaświadczenie</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- WIDOK SZCZEGÓŁÓW + MOCK WEBHOOK -->
+  <div class="mockup" style="flex:1; min-width:300px;">
+    <div class="mockup-header">Widok: Szczegóły skierowania (Anna Kowalska)</div>
+    <div class="mockup-body" style="font-size:11px; color:#334155; padding:12px; position:relative;">
+
+      <!-- Header -->
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
+        <div>
+          <div style="font-weight:700; font-size:13px;">Anna Kowalska</div>
+          <div style="color:#64748b; font-size:10px;">Księgowa · Badanie wstępne · wystawione 20.05.2026</div>
+        </div>
+        <div style="background:#2563eb; color:#fff; border-radius:6px; padding:5px 10px; font-size:10px; cursor:pointer;">↓ PDF</div>
+      </div>
+
+      <!-- Timeline statusów -->
+      <div style="margin-bottom:14px;">
+        <div style="font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:8px;">Status skierowania</div>
+        <div style="display:flex; flex-direction:column; gap:0;">
+
+          <div style="display:flex; gap:8px; align-items:flex-start;">
+            <div style="display:flex; flex-direction:column; align-items:center; flex-shrink:0;">
+              <div style="width:14px; height:14px; border-radius:50%; background:#16a34a; display:flex; align-items:center; justify-content:center; color:#fff; font-size:8px;">✓</div>
+              <div style="width:2px; height:18px; background:#e2e8f0;"></div>
+            </div>
+            <div style="padding-bottom:10px;"><div style="font-weight:600; font-size:10px;">Wysłane</div><div style="font-size:9px; color:#64748b;">20.05.2026 14:32</div></div>
+          </div>
+
+          <div style="display:flex; gap:8px; align-items:flex-start;">
+            <div style="display:flex; flex-direction:column; align-items:center; flex-shrink:0;">
+              <div style="width:14px; height:14px; border-radius:50%; background:#f59e0b; display:flex; align-items:center; justify-content:center; color:#fff; font-size:8px;">●</div>
+              <div style="width:2px; height:18px; background:#e2e8f0;"></div>
+            </div>
+            <div style="padding-bottom:10px;"><div style="font-weight:600; font-size:10px;">W trakcie umawiania</div><div style="font-size:9px; color:#64748b;">21.05.2026 09:15</div></div>
+          </div>
+
+          <div style="display:flex; gap:8px; align-items:flex-start;">
+            <div style="display:flex; flex-direction:column; align-items:center; flex-shrink:0;">
+              <div style="width:14px; height:14px; border-radius:50%; background:#e2e8f0;"></div>
+              <div style="width:2px; height:18px; background:#e2e8f0;"></div>
+            </div>
+            <div style="padding-bottom:10px; color:#94a3b8;"><div style="font-size:10px;">Badania umówione</div></div>
+          </div>
+
+          <div style="display:flex; gap:8px; align-items:flex-start;">
+            <div style="display:flex; flex-direction:column; align-items:center; flex-shrink:0;">
+              <div style="width:14px; height:14px; border-radius:50%; background:#e2e8f0;"></div>
+              <div style="width:2px; height:18px; background:#e2e8f0;"></div>
+            </div>
+            <div style="padding-bottom:10px; color:#94a3b8;"><div style="font-size:10px;">Badania odbyte</div></div>
+          </div>
+
+          <div style="display:flex; gap:8px; align-items:flex-start;">
+            <div style="display:flex; flex-direction:column; align-items:center; flex-shrink:0;">
+              <div style="width:14px; height:14px; border-radius:50%; background:#e2e8f0;"></div>
+            </div>
+            <div style="color:#94a3b8;"><div style="font-size:10px;">Zaświadczenie wystawione</div>
+              <!-- e-Zaświadczenie stub -->
+              <div style="margin-top:4px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:4px; padding:4px 8px; display:flex; gap:5px; align-items:center;">
+                <span style="font-size:10px;">🔒</span>
+                <span style="font-size:9px; color:#94a3b8;">e-Zaświadczenie — integracja wkrótce</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Powiadomienie do pracownika -->
+      <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:8px 10px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="font-size:10px; font-weight:600; color:#166534;">Powiadomienie do pracownika</div>
+          <div style="font-size:9px; color:#64748b;">Ostatnio wysłane: —</div>
+        </div>
+        <div style="background:#16a34a; color:#fff; border-radius:5px; padding:5px 10px; font-size:10px; cursor:pointer;">✉ Wyślij</div>
+      </div>
+
+      <!-- Termin -->
+      <div style="background:#fff7ed; border:1px solid #fed7aa; border-radius:6px; padding:7px 10px; font-size:10px;">
+        <span style="color:#c2410c; font-weight:600;">⏰ Termin orzeczenia: 30.05.2026</span>
+        <span style="color:#ea580c; margin-left:6px;">(za 9 dni)</span>
+      </div>
+
+      <!-- DEV MOCK WEBHOOK BUTTON -->
+      <div style="position:absolute; bottom:12px; right:12px;">
+        <div style="background:#1e293b; color:#94a3b8; border-radius:20px; padding:5px 10px; font-size:9px; font-family:monospace; cursor:pointer; display:flex; gap:4px; align-items:center; box-shadow:0 2px 8px rgba(0,0,0,0.2);">
+          <span style="color:#4ade80; font-size:10px;">●</span> dev: mock webhook
+        </div>
+        <!-- Drawer (rozwinięty dla podglądu) -->
+        <div style="position:absolute; bottom:28px; right:0; background:#1e293b; border-radius:8px; padding:10px; width:200px; box-shadow:0 4px 20px rgba(0,0,0,0.3);">
+          <div style="color:#94a3b8; font-size:9px; font-family:monospace; margin-bottom:8px; border-bottom:1px solid #334155; padding-bottom:6px;">Symuluj zmianę statusu</div>
+          <div style="display:flex; flex-direction:column; gap:4px;">
+            <div style="background:#334155; color:#e2e8f0; border-radius:4px; padding:5px 8px; font-size:9px; font-family:monospace; cursor:pointer;">→ Badania umówione</div>
+            <div style="background:#334155; color:#94a3b8; border-radius:4px; padding:5px 8px; font-size:9px; font-family:monospace;">
+              <div style="margin-bottom:3px; color:#e2e8f0;">+ placówka:</div>
+              <div style="background:#1e293b; border-radius:3px; padding:3px 6px; color:#4ade80;">CM Medicover Wola</div>
+              <div style="margin-top:3px; color:#e2e8f0;">+ termin:</div>
+              <div style="background:#1e293b; border-radius:3px; padding:3px 6px; color:#4ade80;">28.05.2026 10:00</div>
+            </div>
+            <div style="background:#334155; color:#e2e8f0; border-radius:4px; padding:5px 8px; font-size:9px; font-family:monospace; cursor:pointer;">→ Badania odbyte</div>
+            <div style="background:#334155; color:#e2e8f0; border-radius:4px; padding:5px 8px; font-size:9px; font-family:monospace; cursor:pointer;">→ Zaświadczenie wystawione</div>
+            <div style="border-top:1px solid #334155; margin-top:4px; padding-top:4px; color:#64748b; font-size:8px; font-family:monospace; text-align:center;">NODE_ENV=development only</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:16px;">Zatwierdź oba widoki lub wskaż co zmienić — potem przechodzimy do ostatniej sekcji (Admin panel + PDF).</p>

@@ -1,0 +1,191 @@
+<h2>Wizard wystawienia skierowania — oba kroki</h2>
+<p class="subtitle">Mockup layoutu. Kliknij krok który chcesz zatwierdzić lub skomentuj w terminalu.</p>
+
+<div style="display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap;">
+
+  <!-- KROK 1 -->
+  <div class="mockup" data-choice="step1" onclick="toggleSelect(this)" style="cursor:pointer; flex:1; min-width:340px;">
+    <div class="mockup-header">Krok 1 / 2 — Pracownik i rodzaj badania</div>
+    <div class="mockup-body" style="font-size:11px; color:#334155;">
+
+      <!-- Progress -->
+      <div style="display:flex; gap:6px; align-items:center; margin-bottom:16px;">
+        <div style="background:#2563eb; color:#fff; border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:10px;">1</div>
+        <div style="height:2px; flex:1; background:#2563eb;"></div>
+        <div style="background:#e2e8f0; color:#94a3b8; border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:10px;">2</div>
+        <div style="height:2px; flex:1; background:#e2e8f0;"></div>
+        <div style="font-size:9px; color:#94a3b8;">Generuj</div>
+      </div>
+
+      <!-- Pracownik -->
+      <div style="margin-bottom:14px;">
+        <div style="font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:5px;">Pracownik *</div>
+        <div style="background:#fff; border:1px solid #cbd5e1; border-radius:6px; padding:8px 10px; display:flex; align-items:center; gap:6px;">
+          <span style="color:#94a3b8;">🔍</span>
+          <span style="color:#94a3b8;">Szukaj po nazwisku lub PESEL...</span>
+        </div>
+        <div style="margin-top:4px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:6px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-weight:600;">Anna Kowalska</div>
+            <div style="color:#64748b; font-size:9px;">Stanowisko: Księgowa · PESEL: 85****4521</div>
+          </div>
+          <span style="color:#2563eb;">✓</span>
+        </div>
+      </div>
+
+      <!-- Rodzaj badania -->
+      <div style="margin-bottom:14px;">
+        <div style="font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:5px;">Rodzaj badania *</div>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <label style="display:flex; align-items:center; gap:8px; background:#eff6ff; border:2px solid #2563eb; border-radius:8px; padding:10px 12px; cursor:pointer;">
+            <div style="width:14px; height:14px; border-radius:50%; background:#2563eb; border:3px solid #fff; box-shadow:0 0 0 2px #2563eb;"></div>
+            <div>
+              <div style="font-weight:600;">Wstępne</div>
+              <div style="font-size:9px; color:#64748b;">Przed rozpoczęciem pracy</div>
+            </div>
+          </label>
+          <label style="display:flex; align-items:center; gap:8px; background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px; cursor:pointer;">
+            <div style="width:14px; height:14px; border-radius:50%; border:2px solid #cbd5e1;"></div>
+            <div>
+              <div style="font-weight:600;">Okresowe</div>
+              <div style="font-size:9px; color:#64748b;">W trakcie zatrudnienia</div>
+            </div>
+          </label>
+          <label style="display:flex; align-items:center; gap:8px; background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px; cursor:pointer;">
+            <div style="width:14px; height:14px; border-radius:50%; border:2px solid #cbd5e1;"></div>
+            <div>
+              <div style="font-weight:600;">Kontrolne</div>
+              <div style="font-size:9px; color:#64748b;">Po chorobie powyżej 30 dni</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Szablon (opcjonalny) -->
+      <div style="margin-bottom:16px;">
+        <div style="font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:5px;">Szablon <span style="font-weight:400; color:#94a3b8;">(opcjonalny)</span></div>
+        <div style="background:#fff; border:1px solid #cbd5e1; border-radius:6px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center; color:#94a3b8;">
+          <span>Wybierz szablon...</span><span>▾</span>
+        </div>
+        <div style="font-size:9px; color:#94a3b8; margin-top:3px;">Szablon auto-wypełni czynniki i opis pracy w kroku 2</div>
+      </div>
+
+      <!-- CTA -->
+      <div style="display:flex; justify-content:flex-end;">
+        <div style="background:#2563eb; color:#fff; border-radius:8px; padding:10px 20px; font-weight:600; font-size:12px; cursor:pointer;">Dalej →</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KROK 2 -->
+  <div class="mockup" data-choice="step2" onclick="toggleSelect(this)" style="cursor:pointer; flex:1; min-width:340px;">
+    <div class="mockup-header">Krok 2 / 2 — Czynniki, opis, termin</div>
+    <div class="mockup-body" style="font-size:11px; color:#334155;">
+
+      <!-- Progress -->
+      <div style="display:flex; gap:6px; align-items:center; margin-bottom:16px;">
+        <div style="background:#16a34a; color:#fff; border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; font-size:10px;">✓</div>
+        <div style="height:2px; flex:1; background:#2563eb;"></div>
+        <div style="background:#2563eb; color:#fff; border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:10px;">2</div>
+        <div style="height:2px; flex:1; background:#e2e8f0;"></div>
+        <div style="font-size:9px; color:#94a3b8;">Generuj</div>
+      </div>
+
+      <!-- Kontekst -->
+      <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:8px 10px; margin-bottom:12px; display:flex; gap:10px; font-size:10px;">
+        <div><span style="color:#64748b;">Pracownik:</span> <strong>Anna Kowalska</strong></div>
+        <div style="color:#e2e8f0;">|</div>
+        <div><span style="color:#64748b;">Badanie:</span> <strong>Wstępne</strong></div>
+      </div>
+
+      <!-- Czynniki narażeń - accordion -->
+      <div style="font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:6px;">Czynniki narażeń *</div>
+
+      <!-- Fizyczne - expanded -->
+      <div style="border:1px solid #2563eb; border-radius:6px; margin-bottom:4px; overflow:hidden;">
+        <div style="background:#eff6ff; padding:7px 10px; display:flex; justify-content:space-between; align-items:center;">
+          <div style="font-weight:600; color:#1d4ed8;">⚡ Fizyczne <span style="background:#2563eb; color:#fff; border-radius:10px; padding:1px 7px; font-size:9px; margin-left:4px;">2</span></div>
+          <span style="color:#94a3b8;">▾</span>
+        </div>
+        <div style="padding:8px 10px; background:#fff;">
+          <label style="display:flex; gap:6px; align-items:center; margin-bottom:5px; cursor:pointer;">
+            <div style="width:12px; height:12px; background:#2563eb; border-radius:2px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:8px;">✓</div>
+            <span>Praca z monitorem ekranowym</span>
+          </label>
+          <label style="display:flex; gap:6px; align-items:center; margin-bottom:5px; cursor:pointer;">
+            <div style="width:12px; height:12px; background:#2563eb; border-radius:2px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:8px;">✓</div>
+            <span>Wymuszona pozycja ciała</span>
+          </label>
+          <label style="display:flex; gap:6px; align-items:center; margin-bottom:6px; cursor:pointer;">
+            <div style="width:12px; height:12px; border:1px solid #cbd5e1; border-radius:2px;"></div>
+            <span style="color:#64748b;">Hałas</span>
+          </label>
+          <!-- Firmowe -->
+          <div style="border-top:1px dashed #e2e8f0; padding-top:5px; margin-top:2px;">
+            <label style="display:flex; gap:6px; align-items:center; margin-bottom:5px; cursor:pointer;">
+              <div style="width:12px; height:12px; border:1px solid #cbd5e1; border-radius:2px;"></div>
+              <span style="color:#7c3aed;">Praca z komputerem 8h/dobę <span style="font-size:8px; color:#a78bfa;">(własny)</span></span>
+            </label>
+            <div style="display:flex; gap:4px; align-items:center;">
+              <div style="flex:1; border:1px dashed #cbd5e1; border-radius:4px; padding:4px 6px; color:#94a3b8; font-size:10px;">Dodaj własne (po przecinku)...</div>
+              <div style="background:#f1f5f9; border-radius:4px; padding:4px 8px; font-size:10px; color:#475569;">+</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pozostałe kategorie - zwinięte -->
+      <div style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:4px;">
+        <div style="padding:7px 10px; display:flex; justify-content:space-between; align-items:center;">
+          <div style="color:#64748b;">🧪 Chemiczne</div><span style="color:#94a3b8;">▸</span>
+        </div>
+      </div>
+      <div style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:4px;">
+        <div style="padding:7px 10px; display:flex; justify-content:space-between; align-items:center;">
+          <div style="color:#64748b;">🦠 Biologiczne</div><span style="color:#94a3b8;">▸</span>
+        </div>
+      </div>
+      <div style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:4px;">
+        <div style="padding:7px 10px; display:flex; justify-content:space-between; align-items:center;">
+          <div style="color:#64748b;">💨 Pyły</div><span style="color:#94a3b8;">▸</span>
+        </div>
+      </div>
+      <div style="border:1px solid #e2e8f0; border-radius:6px; margin-bottom:12px;">
+        <div style="padding:7px 10px; display:flex; justify-content:space-between; align-items:center;">
+          <div style="color:#64748b;">📌 Inne</div><span style="color:#94a3b8;">▸</span>
+        </div>
+      </div>
+
+      <!-- Opis pracy -->
+      <div style="margin-bottom:10px;">
+        <div style="font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:5px;">Opis warunków pracy *</div>
+        <div style="background:#fff; border:1px solid #cbd5e1; border-radius:6px; padding:8px; color:#334155; min-height:40px; font-size:10px;">Praca biurowa przy komputerze 8h/dobę, obsługa klienta telefonicznie</div>
+      </div>
+
+      <!-- Termin -->
+      <div style="margin-bottom:14px;">
+        <div style="font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:#64748b; margin-bottom:5px;">Termin dostarczenia orzeczenia *</div>
+        <div style="background:#fff; border:1px solid #cbd5e1; border-radius:6px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center;">
+          <span>31.05.2026</span><span style="color:#94a3b8;">📅</span>
+        </div>
+      </div>
+
+      <!-- Zapisz jako szablon -->
+      <div style="background:#fefce8; border:1px solid #fef08a; border-radius:6px; padding:8px 10px; margin-bottom:12px; display:flex; gap:6px; align-items:center; font-size:10px;">
+        <div style="width:12px; height:12px; border:1px solid #cbd5e1; border-radius:2px;"></div>
+        <span>Zapisz te ustawienia jako szablon</span>
+        <div style="background:#fff; border:1px solid #fef08a; border-radius:4px; padding:2px 8px; color:#94a3b8;">Nazwa szablonu...</div>
+      </div>
+
+      <!-- CTAs -->
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div style="color:#64748b; font-size:11px; cursor:pointer;">← Wstecz</div>
+        <div style="background:#16a34a; color:#fff; border-radius:8px; padding:10px 20px; font-weight:600; font-size:12px; cursor:pointer;">Generuj skierowanie ✓</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:16px;">Kliknij mockup który chcesz zatwierdzić, lub odpowiedz w terminalu z uwagami do obu kroków.</p>

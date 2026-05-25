@@ -1,0 +1,108 @@
+<h2>Jak powinien działać formularz wystawienia skierowania?</h2>
+<p class="subtitle">Użytkownik: kadry/HR, 50+, nie-techniczna. Cel: wystawić skierowanie w jak najmniejszej liczbie kroków bez zagubienia.</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="wizard" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="font-size:11px; font-family:monospace; background:#f8f9fa; border-radius:6px; padding:12px; text-align:left;">
+        <div style="display:flex; gap:6px; margin-bottom:10px;">
+          <div style="background:#2563eb; color:#fff; border-radius:12px; padding:3px 10px; font-size:10px;">① Pracownik</div>
+          <div style="background:#e2e8f0; border-radius:12px; padding:3px 10px; font-size:10px; color:#64748b;">② Rodzaj</div>
+          <div style="background:#e2e8f0; border-radius:12px; padding:3px 10px; font-size:10px; color:#64748b;">③ Czynniki</div>
+          <div style="background:#e2e8f0; border-radius:12px; padding:3px 10px; font-size:10px; color:#64748b;">④ Termin</div>
+          <div style="background:#e2e8f0; border-radius:12px; padding:3px 10px; font-size:10px; color:#64748b;">⑤ Podgląd</div>
+        </div>
+        <div style="border:1px solid #e2e8f0; border-radius:6px; padding:10px;">
+          <div style="font-size:10px; color:#64748b; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px;">Wybierz pracownika</div>
+          <div style="background:#fff; border:1px solid #cbd5e1; border-radius:4px; padding:6px 8px; font-size:11px; color:#334155;">🔍 Szukaj: Kowalska Anna...</div>
+          <div style="margin-top:6px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:4px; padding:5px 8px; font-size:10px;">✓ Anna Kowalska — Księgowa</div>
+        </div>
+        <div style="display:flex; justify-content:flex-end; margin-top:8px;">
+          <div style="background:#2563eb; color:#fff; border-radius:4px; padding:4px 14px; font-size:11px;">Dalej →</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Wizard krok po kroku</h3>
+      <p>5 ekranów: Pracownik → Rodzaj → Czynniki → Termin → Podgląd & Generuj. Jeden wybór na raz, pasek postępu widoczny przez cały czas.</p>
+      <div class="pros-cons" style="margin-top:8px;">
+        <div class="pros"><h4>Zalety</h4><ul><li>Nie można się zgubić</li><li>Łatwe dla 50+</li><li>Walidacja per krok</li></ul></div>
+        <div class="cons"><h4>Wady</h4><ul><li>Wolniej dla power-userów</li><li>5 kliknięć minimum</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="single" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="font-size:11px; font-family:monospace; background:#f8f9fa; border-radius:6px; padding:12px; text-align:left;">
+        <div style="font-size:10px; color:#64748b; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Pracownik</div>
+        <div style="background:#fff; border:1px solid #cbd5e1; border-radius:4px; padding:4px 8px; font-size:10px; margin-bottom:8px;">Anna Kowalska ▾</div>
+        <div style="font-size:10px; color:#64748b; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Rodzaj badania</div>
+        <div style="display:flex; gap:4px; margin-bottom:8px;">
+          <div style="border:1px solid #2563eb; color:#2563eb; border-radius:4px; padding:3px 8px; font-size:10px; background:#eff6ff;">Wstępne</div>
+          <div style="border:1px solid #e2e8f0; border-radius:4px; padding:3px 8px; font-size:10px;">Okresowe</div>
+          <div style="border:1px solid #e2e8f0; border-radius:4px; padding:3px 8px; font-size:10px;">Kontrolne</div>
+        </div>
+        <div style="font-size:10px; color:#64748b; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Czynniki narażeń</div>
+        <div style="display:flex; gap:3px; flex-wrap:wrap; margin-bottom:6px;">
+          <div style="background:#dbeafe; border-radius:3px; padding:2px 6px; font-size:9px;">Fizyczne (3)</div>
+          <div style="background:#f1f5f9; border-radius:3px; padding:2px 6px; font-size:9px;">Chemiczne —</div>
+          <div style="background:#f1f5f9; border-radius:3px; padding:2px 6px; font-size:9px;">Bio —</div>
+          <div style="background:#f1f5f9; border-radius:3px; padding:2px 6px; font-size:9px;">Pyły —</div>
+          <div style="background:#f1f5f9; border-radius:3px; padding:2px 6px; font-size:9px;">Inne —</div>
+        </div>
+        <div style="background:#2563eb; color:#fff; border-radius:4px; padding:4px 14px; font-size:11px; text-align:center;">Generuj skierowanie</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Jeden formularz (scroll)</h3>
+      <p>Wszystkie sekcje na jednej stronie. Wypełniasz od góry do dołu, na dole "Generuj". Sekcja czynników expanduje accordion per kategoria.</p>
+      <div class="pros-cons" style="margin-top:8px;">
+        <div class="pros"><h4>Zalety</h4><ul><li>Szybciej dla experienced</li><li>Widać całość naraz</li></ul></div>
+        <div class="cons"><h4>Wady</h4><ul><li>Może przytłoczyć</li><li>Sekcja czynników długa</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="hybrid" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="font-size:11px; font-family:monospace; background:#f8f9fa; border-radius:6px; padding:12px; text-align:left;">
+        <div style="display:flex; gap:6px; margin-bottom:10px;">
+          <div style="background:#2563eb; color:#fff; border-radius:12px; padding:3px 10px; font-size:10px;">① Pracownik + Rodzaj</div>
+          <div style="background:#e2e8f0; border-radius:12px; padding:3px 10px; font-size:10px; color:#64748b;">② Czynniki + Termin</div>
+        </div>
+        <div style="border:1px solid #e2e8f0; border-radius:6px; padding:10px;">
+          <div style="display:flex; gap:8px; align-items:flex-start;">
+            <div style="flex:1;">
+              <div style="font-size:10px; color:#64748b; margin-bottom:3px;">Pracownik</div>
+              <div style="background:#fff; border:1px solid #cbd5e1; border-radius:4px; padding:4px 6px; font-size:10px;">Kowalska ▾</div>
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:10px; color:#64748b; margin-bottom:3px;">Rodzaj</div>
+              <div style="display:flex; flex-direction:column; gap:2px;">
+                <div style="border:1px solid #2563eb; color:#2563eb; border-radius:3px; padding:2px 6px; font-size:9px; background:#eff6ff;">● Wstępne</div>
+                <div style="border:1px solid #e2e8f0; border-radius:3px; padding:2px 6px; font-size:9px;">○ Okresowe</div>
+                <div style="border:1px solid #e2e8f0; border-radius:3px; padding:2px 6px; font-size:9px;">○ Kontrolne</div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; justify-content:flex-end; margin-top:8px;">
+            <div style="background:#2563eb; color:#fff; border-radius:4px; padding:4px 14px; font-size:11px;">Dalej →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — 2 kroki (rekomendacja)</h3>
+      <p>Krok 1: wybierz pracownika + rodzaj badania (+ opcjonalnie szablon). Krok 2: pełny ekran czynników narażeń + termin + podgląd i generuj.</p>
+      <div class="pros-cons" style="margin-top:8px;">
+        <div class="pros"><h4>Zalety</h4><ul><li>Balans prostoty i szybkości</li><li>Czynniki dostają przestrzeń</li><li>Szablon wybierany wcześnie → auto-wypełnia krok 2</li></ul></div>
+        <div class="cons"><h4>Wady</h4><ul><li>Krok 2 wciąż może być długi</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:16px;">Kliknij kartę aby wybrać, potem odpowiedz w terminalu.</p>

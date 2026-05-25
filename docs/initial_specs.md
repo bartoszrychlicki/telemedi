@@ -1,0 +1,58 @@
+Notatki z systemu:
+
+Budujemy system wew. dla firmy Telemedi do zarządzania obsługą zleceń na umawianie medycyny pracy, dla pracowników klientów telemedi (duze firmy).
+
+System beda obslugiowac nie techniczne osoby, starsze, kolo 50. Musi byc bardzo prosty i intuicyjny.
+Jego celem jest zlecenie i zarzadzanie procesem zlecenia skierowan na  badanie medycyny prac. 
+Ponizej znajdiesz notatki jak i czesciowa transkrypcje z spotkania briefowego jako wsparcie dodatkowe
+
+# Notatki 
+Medycyna pracy
+- Na badania medycyny pracy zgoda lekarzy, że może pracować na danych warunkach 
+- Platforma do kontaktu miedzy nami a pracodawca (kadry, HR, oso. Odpowiadające za wystawienie medycyny pracy) 
+- System jest potrzebny, aby ścieżka kontaktu z pracodawcą było jak najbardziej krótsza
+    - Od zlecenia od pracodawcy 
+    - Moduł zarządzaniami Rolami do pracodawcy (RBAC) 
+        - Admin
+        - Koordynator - może zakładać konta pracownika  - też może działać 
+        - Pracownik - 
+
+    - Panel firm (workspace) 
+    - Lista pracowników zleceniodawcy 
+        - Ręcznie
+        - CSV/XLS
+        - Zakres danych z przykładowego skierowania na medycynę pracy
+        - Stanowisko na które zatrudnione/ mail + telefon + kontakt do pracownika
+    - Moduł czynników narażeń 
+        - 5 kategorii fizycznie, chemiczne biologiczne pyły i inne
+        - Wystawiania skierowań
+        - Lista jest nietykalna 
+        - Pracodawca musi móc dodawać swoje czynniki 
+    - Formularz wystawienia skierowania 
+        - Mogę wybrać dla jakiego pracownika wystawiam skierowanie
+        - Jaki rodzaj skierowania
+            - Wstępne
+            - Okresowe
+            - Kontrolne
+        - Szablon na przyszłość zapisać
+            - Szablon to zestaw czynników narażeń (grupowanie) 
+        - Termin dostarczenia orzeczenia
+            - Pracodawca nam wskazuje do kiedy mamy czas - z jakimś minimum (kiedy jest faktycznie zatrudnienie). 
+            - Extra czas/extra kasa
+        - Generowanie skierowania na listę skierowań 
+            - Pobieranie  skierowania w PDF
+            - Mockowanie połączenia nowego ticketu z terminem realizacji (po jakimś ani) 
+        - Status skierowania
+            - Draft
+            - Wysyłane
+            - W trakcie umawiania
+            - Badania umówione (gdzie i na kiedy) 
+            - Badania odbyte 
+            - Wystawione zaświadczenie 
+        - UX/UIowo prostę, bardzo widoczne, nietechniczny user
+            - Online do logowania 
+
+# Transkrypcje
+Wystawiania skierowań. Okej, czyli role będą takie, że co, że jest jakiś admin, koordynator, tak. To ktoś więcej? Tak, no i pracownicy jej. Jacyś tacy pracownicy działu HR, którzy będą mieli możliwość wystawiania tych skierowań. A czym się różni koordynator od pracownika wtedy? Że koordynator może zakładać te konta dodatkowo. A pracownik… Dla pracownika? Tak. Czyli taki menadżer, superadministrator i pracownik to okej. Natomiast i ten koordynator czy menadżer i jego pracownik z działu HR jakby mogą mają te same uprawnienia co do działania na platformie. Więc wszystkie te zakładki i tak dalej poza zakładaniem kont już widzą te same. Więc to jest jakby pierwszy jakiś tam moduł, czyli właśnie ten panel z rolami. Drugi moduł to jest lista pracowników tylko to już nie lista pracowników tych użytkowników systemu tylko pracowników zleceniodawcy tak w firmie ale pewnie też same firmy tak, czyli musicie mieć klienta tak firma XYZ. To to już jest wyżej to my jako administrator tworzymy sobie panel na przykład firmy nie wiem jakiejś tam Wedel dajemy dostęp koordynatorowi i on już użytkowników sobie zakłada. Dalej mamy listę pracowników tych pracowników ci użytkownicy mogą dostać dodać albo ręcznie pojedynczy profil albo wgrać plikiem natomiast plik musi być najprostszy żadna csp-a bo tam w tych herach najczęściej to są takie panie 50 plus które tak średnio technologicznie czyli co działa najlepiej jak nie czyta? XLS zwykły taki żeby jeszcze mogły pobrać sobie jakiś szablon wypełnić i tylko go wrzucać do systemu i szablon też najlepiej sprzykładany tak żeby widziały naocznie jak to ma wyglądać i zakres danych na tej liście to jak na google sobie sprawdzisz przykładowe skierowanie medycyny pracy to te dane imię nazwisko PESEL albo data urodzenia w zależności co krajowiec czy nie przykładowego skierowania na medycynę pracującą tak więc to są dane osobowe dane kontaktowe jest informacja o stanowisku na które zostaje zatrudniony albo na którym pracuje pracownik i dane kontaktowe mail telefon żebyśmy my mogli skoordynować jakby umawianie przepraszam tylko odpiszę
+
+Zlecenie:  Czynniki fizyczne, chemiczne, biologiczne, pyły i inne. To też jak zobaczysz sobie na skierowaniu. I co jest ważne to na skierowaniu jak będziemy generować PDF-a to muszą być widoczne te pięć kategorii. I po prostu jeżeli w danej kategorii nie ma żadnego czynników wskazanego, no to jest albo puste pola, albo jakiś x-ik, minusik po prostu sugerujący, że jest ta kategoria pusta, ale ona musi być pokazana na PDF-ie. Czyli że musi być tych pięć ale… I jedne są wypełnione a inne nie. I te czynniki narażeń. Chodzi o to że my na dzień dobry dajemy pulę w każdej kategorii po kilka kilkadziesiąt czynników i ta lista dla pracodawcy jest nietykalna. Nie może je edytować usuwać nie może nic robić natomiast w każdej z tej kategorii pracodawca musi móc sobie dodawać swoje czynniki. Czyli np. nawet zostawiając na tym Wedlu bo to akurat duża firma szczególnie na fabrykach oni są zobowiązani jako duży pracodawca do tego żeby mieć specjalistów do spraw BHP na pokładzie i taki specjalista mówi że OK no praca z komputerem jest OK ale on uważa że u nich powinno być wskazane że to jest sześć godzin dziennie więc w teorii my mamy czynnik praca z komputerem ale on sobie chce dodać swój czynnik że praca z komputerem sześć godzin dziennie ale w danej kategorii tak w danej kategorii to będzie kategoria wtedy do tego fizyczna ona decyduje jaka to jest kategoria natomiast musi to wpisać więc to co oni sami wpisują mogą usuwać edytować robić co chcą z tym. Natomiast nasze bazy nie tykają. Więc to są te czynniki na razie. No i teraz właśnie już ten formularz wystawienia skierowania jako kolejny moduł w tym formularzu. Pierwsza funkcjonalność to to, że mogę wybrać dla jakich pracowników chcę wystawić dla jakiego pracownika wystawiam skierowanie. Dlatego była ta lista pracowników wcześniej do uzupełnienia. Wybieram jaki rodzaj skierowania to są wstępne, okresowe i kontrolne które muszę zaznaczyć przy wystawianiu. Mam te pięć kategorii czynników narażeń i z każdej wielokrotnego wyboru mogę tak dodawać pojedyncze czynniki. I jak to wypełnię to mogę dodać z tego szablon. Na przyszłość? Tak. Chodzi o to że jeżeli w firmie na przykład prace biurowe administracyjne wykonuje dwieście osób to mogę utworzyć jeden szablon pod tytułem Prace biurowe i niezależnie czy wystawię skierowanie dla księgowej asystentki nie wiem tam kogoś jakiegoś informatyka to wszystkie mi je lecę jednym szablonem czyli nie muszę per kategoria tych czynników wykliknąć i akurat tu głupi przykład teraz bo szablon to jest po prostu zestaw tych czynników tak tak tak które później już nam się autouzupełniają i przy pracy biurowej akurat słaby przykład bo to będzie jeden czynnik praca z komputerem ale jak mamy pracodawców na fabrykach to tam pewnie 20 no to żeby nie tracić czasu to lecą szablonami więc jak już utworzy szablon no to też muszę mieć gdzieś jakieś okienko do wyboru szablonu z którego bym chciała skorzystać przy kolejnym skierowaniu wystawianiu i ostatnia pozycja na etapie tego formularza to jest termin dostarczania orzeczenia czyli pracodawca nam wskazuje do kiedy mamy czas na organizację tych badań medycyny pracę czyli jeżeli wystawiają dla Agnieszki Glińczak skierowanie na z szablonem pracy biurowe powiedzmy i zatrudnienie jest od 1 czerwca to wskazują w okienko dzień wcześniej zazwyczaj 30 maja czy 31 dnia miesiąca orzeczenie już powinno być w mojej ręce tak żebym na drugi dzień przyszła do firmy już podpisała umowę więc jest tak że każde będzie jak najszybciej zaznaczone jutro na jutro na jutro na jutro nie my jesteśmy zobowiązani jeszcze jakimiś tam zapisami umów i tak dalej ok że musi być z jakimś minimum tak tak tak ale to jest już poza systemem oni tam wskazują kiedy jest faktyczne zatrudnienie oczywiście są tacy którzy na drugi dzień nie wskazują ale to jest inna kwestia już wtedy wyjaśniona no więc że że ekstra czas to ekstra kasa ekstra kasa powinno tak być i generujemy już jakby to skierowanie i ono się generuje na jakiś moduł listy skierowań tak żeby było widać co było wystawione pracodawca może sobie pobrać pdf gotowy z tym skierowaniem i może pobrać bo on musi gdzieś go wrzucić albo sobie do podpisu gdzieś na zewnątrz jeżeli ma podpisy jakieś kwalifikowane albo ręcznie podpisuje i musi przekazać pracownikowi do ręki żeby pracownik z tym skierowaniem udał się do placówki i teraz po wystawieniu tego skierowania coś co już nie jest dla ciebie teraz do realizacji tylko jakby zamokowanie bardziej że coś takiego jest do nas na zewnątrz do systemu ticketowego dla call center trafia PIN i ticket do realizacji że dla Agnieszki Winczak zostało wystawione skierowanie z terminem realizacji do 30 maja i obsługa sobie jakby tam w swoim procesie ogarnia to zgłoszenie kontaktuje się z pracownikiem proponuje mu placówki, termin realizacji, umawia i zwrotnie statusy wracają do tego systemu dla dla pracodawcy czyli tam gdzie jest jakaś lista skierowań to przy tym jest jakie tam mamy statusy? wiesz co masz tu zaproponuj dowolne jakieś wiesz nowe przyjęte do realizacji w trakcie umawiania zrealizowane w momencie kiedy byłby status zrealizowano końcowy to pracodawca musi widzieć do jakiej placówki na jaki termin zostało to umówione badanie odbycia na przykład i wystawione nowe skierowanie cokolwiek takiego tak jakieś tam przykładowe wiesz dwa żeby tylko pokazać że faktycznie pamiętasz o tym że tutaj te statusy powinny być i ten zewnętrzny system oczywiście on nie jest do realizacji tylko właśnie żeby ktoś z tego korzystał? w sensie tam korzystają te osoby głównie z tej firmy tak? czyli tam jakieś kadrowa? z tego portalu to tylko korzysta ta firma czyli kadrowa jakieś tam HR-ówki osoby które zajmują się zatrudnianiem i obsługą tych pracowników więc twojej perspektywy co jest kluczowe w tym systemie? w sensie nie tyle co funkcjonalność tylko jakie jego aspekty czyli nie wiem pogoda szybkość łatwość kontrast no wszystko wszystko to co powiedziałeś trzeba wziąć pod uwagę że z tego systemu korzystają osoby totalnie nietechniczne więc dlatego mówię że na przykład nie wiem CSV-ki czy cokolwiek to jest w ogóle krok za daleko nie? jasne jasne więc żeby to było bardzo proste bez wymyślnych jakichś też designów i żeby system łatwo przeprowadzał przez te kroki gdzie co dodać łatwy baton widoczny bez domyślania się systemowego takie UX-owe bardzo mocno podejście żeby to było faktycznie bardzo proste im prostsze tym lepsze takie bardzo widoczne bez domyślania się jakiegoś gdzieś tam gdzie kliknąć gdzie wejść to jest co? głównie w biurach tak? na komputerach będzie używane tak? i to nie jest żadna aplikacja tylko on line do logowania system dla nich no to teraz tak ja pewnie będę bym sobie to przeanalizuje za jakieś 20 minut pewnie miałbym do ciebie pewnie jeszcze parę pytań dobra to co przyjść do ciebie? Nie ja tu przyjdę. Ty przyjdę? Tak. To umówmy się 20 po jest za pięć no. Ja sobie po prostu to teraz wrzucę przeanalizuję zobaczę to jak to wygląda i będę miał pytanka po prostu nie? Dobra. Dobra

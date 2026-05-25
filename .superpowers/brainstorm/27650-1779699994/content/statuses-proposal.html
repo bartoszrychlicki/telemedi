@@ -1,0 +1,107 @@
+<h2>Przeprojektowanie statusów skierowania</h2>
+<p class="subtitle">Problem z obecnymi statusami: opisują operacje wewnętrzne Telemedi, nie stan który jest istotny dla HR. Dwie propozycje poniżej.</p>
+
+<div class="split">
+
+  <!-- OBECNE - problem -->
+  <div class="mockup" style="flex:1;">
+    <div class="mockup-header" style="background:#fee2e2; color:#991b1b;">✗ Obecne statusy — problem</div>
+    <div class="mockup-body" style="font-size:11px;">
+      <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:12px;">
+        <div style="display:flex; align-items:center; gap:8px; padding:7px 10px; background:#f8fafc; border-radius:6px; border:1px solid #e2e8f0;">
+          <div style="width:10px; height:10px; border-radius:50%; background:#94a3b8; flex-shrink:0;"></div>
+          <div><strong>Draft</strong> <span style="color:#64748b; font-size:9px;">— OK, jasne</span></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; padding:7px 10px; background:#f8fafc; border-radius:6px; border:1px solid #e2e8f0;">
+          <div style="width:10px; height:10px; border-radius:50%; background:#64748b; flex-shrink:0;"></div>
+          <div><strong>Wysłane</strong> <span style="color:#dc2626; font-size:9px;">← HR nie rozróżnia tego...</span></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; padding:7px 10px; background:#fef9c3; border-radius:6px; border:1px solid #fde047;">
+          <div style="width:10px; height:10px; border-radius:50%; background:#f59e0b; flex-shrink:0;"></div>
+          <div><strong>W trakcie umawiania</strong> <span style="color:#dc2626; font-size:9px;">← ...od tego. Oba = "Telemedi ogarnia"</span></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; padding:7px 10px; background:#dcfce7; border-radius:6px; border:1px solid #86efac;">
+          <div style="width:10px; height:10px; border-radius:50%; background:#16a34a; flex-shrink:0;"></div>
+          <div><strong>Badania umówione</strong> <span style="color:#64748b; font-size:9px;">— OK, ważne</span></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; padding:7px 10px; background:#dbeafe; border-radius:6px; border:1px solid #93c5fd;">
+          <div style="width:10px; height:10px; border-radius:50%; background:#2563eb; flex-shrink:0;"></div>
+          <div><strong>Badania odbyte</strong> <span style="color:#64748b; font-size:9px;">— OK, ale nazwa techniczna</span></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; padding:7px 10px; background:#ede9fe; border-radius:6px; border:1px solid #c4b5fd;">
+          <div style="width:10px; height:10px; border-radius:50%; background:#7c3aed; flex-shrink:0;"></div>
+          <div><strong>Wystawione zaświadczenie</strong> <span style="color:#64748b; font-size:9px;">— OK</span></div>
+        </div>
+      </div>
+      <div style="background:#fee2e2; border-radius:6px; padding:8px; font-size:10px; color:#991b1b;">
+        6 statusów, 2 z nich nierozróżnialne dla HR-u. "Wysłane" i "W trakcie umawiania" to wewnętrzna operacja Telemedi.
+      </div>
+    </div>
+  </div>
+
+  <!-- PROPOZYCJA -->
+  <div class="mockup" data-choice="new" onclick="toggleSelect(this)" style="flex:1; cursor:pointer;">
+    <div class="mockup-header" style="background:#dcfce7; color:#166534;">✓ Propozycja — 5 statusów z perspektywy HR</div>
+    <div class="mockup-body" style="font-size:11px;">
+      <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:12px;">
+
+        <div style="border-radius:8px; border:1px solid #e2e8f0; overflow:hidden;">
+          <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; background:#f8fafc;">
+            <div style="width:10px; height:10px; border-radius:50%; background:#94a3b8; flex-shrink:0;"></div>
+            <div style="flex:1;"><strong>Szkic</strong></div>
+            <div style="font-size:9px; background:#f1f5f9; border-radius:4px; padding:2px 6px; color:#475569;">HR: dokończ i wyślij</div>
+          </div>
+        </div>
+
+        <div style="border-radius:8px; border:1px solid #fed7aa; overflow:hidden;">
+          <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; background:#fff7ed;">
+            <div style="width:10px; height:10px; border-radius:50%; background:#f97316; flex-shrink:0;"></div>
+            <div style="flex:1;"><strong>Zlecone</strong> <span style="font-size:9px; color:#64748b;">(=Wysłane + W trakcie umawiania)</span></div>
+            <div style="font-size:9px; background:#ffedd5; border-radius:4px; padding:2px 6px; color:#c2410c;">HR: czekaj</div>
+          </div>
+          <div style="padding:6px 10px; background:#fefce8; font-size:9px; color:#713f12; border-top:1px solid #fed7aa;">
+            Telemedi kontaktuje się z pracownikiem i proponuje terminy
+          </div>
+        </div>
+
+        <div style="border-radius:8px; border:2px solid #16a34a; overflow:hidden; box-shadow:0 0 0 3px #dcfce7;">
+          <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; background:#f0fdf4;">
+            <div style="width:10px; height:10px; border-radius:50%; background:#16a34a; flex-shrink:0;"></div>
+            <div style="flex:1;"><strong>Umówione 📅</strong></div>
+            <div style="font-size:9px; background:#dcfce7; border-radius:4px; padding:2px 6px; color:#166534; font-weight:600;">HR: poinformuj pracownika</div>
+          </div>
+          <div style="padding:6px 10px; background:#f0fdf4; font-size:9px; color:#166534; border-top:1px solid #bbf7d0; display:flex; gap:12px;">
+            <span>📍 CM Medicover Wola</span>
+            <span>📅 28.05.2026 10:00</span>
+          </div>
+        </div>
+
+        <div style="border-radius:8px; border:1px solid #93c5fd; overflow:hidden;">
+          <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; background:#eff6ff;">
+            <div style="width:10px; height:10px; border-radius:50%; background:#2563eb; flex-shrink:0;"></div>
+            <div style="flex:1;"><strong>Zrealizowane</strong> <span style="font-size:9px; color:#64748b;">(=Badania odbyte)</span></div>
+            <div style="font-size:9px; background:#dbeafe; border-radius:4px; padding:2px 6px; color:#1e40af;">HR: czekaj na orzeczenie</div>
+          </div>
+        </div>
+
+        <div style="border-radius:8px; border:1px solid #c4b5fd; overflow:hidden;">
+          <div style="display:flex; align-items:center; gap:8px; padding:8px 10px; background:#faf5ff;">
+            <div style="width:12px; height:12px; border-radius:50%; background:#7c3aed; display:flex; align-items:center; justify-content:center; color:#fff; font-size:8px;">✓</div>
+            <div style="flex:1;"><strong>Orzeczenie gotowe ✓</strong></div>
+            <div style="font-size:9px; background:#ede9fe; border-radius:4px; padding:2px 6px; color:#5b21b6; font-weight:600;">Zamknięte</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Termin jako overlay badge -->
+      <div style="background:#fff7ed; border:1px solid #fed7aa; border-radius:6px; padding:8px 10px; font-size:10px;">
+        <div style="font-weight:600; color:#c2410c; margin-bottom:4px;">⚠️ Termin = osobny wskaźnik, nie status</div>
+        <div style="color:#64748b; line-height:1.4;">Na liście termin pojawia się jako badge <span style="background:#fee2e2; color:#dc2626; border-radius:4px; padding:1px 5px; font-size:9px;">PILNE · 2 dni</span> nałożony na dowolny status. Nie blokuje flow — ostrzega.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:16px;">Kliknij prawą kartę aby zatwierdzić propozycję, lub odpowiedz w terminalu z uwagami.</p>
