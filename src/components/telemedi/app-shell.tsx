@@ -12,11 +12,13 @@ import {
   FileText,
   Gauge,
   LogOut,
+  Menu,
   Settings,
   ShieldCheck,
   SlidersHorizontal,
   UserRound,
   Users,
+  X,
 } from "lucide-react";
 
 import { apiFetch } from "@/lib/client-api";
@@ -61,6 +63,7 @@ export function AppShell({
   const [me, setMe] = useState<MeResponse | null>(null);
   const [error, setError] = useState("");
   const [collapsed, setCollapsed] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -86,6 +89,10 @@ export function AppShell({
       active = false;
     };
   }, [mode, router]);
+
+  useEffect(() => {
+    setNavOpen(false);
+  }, [pathname]);
 
   async function signOut() {
     setError("");
@@ -119,7 +126,16 @@ export function AppShell({
 
   return (
     <div className="app-shell">
-      <aside className={`sidebar ${collapsed ? "sidebar-collapsed" : ""}`}>
+      <button
+        aria-label="Zamknij menu"
+        className={`sidebar-scrim ${navOpen ? "is-open" : ""}`}
+        onClick={() => setNavOpen(false)}
+        type="button"
+      />
+      <aside
+        aria-label={mode === "admin" ? "Menu administracyjne" : "Menu portalu HR"}
+        className={`sidebar ${collapsed ? "sidebar-collapsed" : ""} ${navOpen ? "mobile-open" : ""}`}
+      >
         <div className="sidebar-inner">
           <div className="brand">
             <div className="brand-mark">T</div>
@@ -128,7 +144,7 @@ export function AppShell({
               <div className="brand-sub">Medycyna pracy</div>
             </div>
             <button
-              className="btn btn-ghost btn-sm hide-when-collapsed"
+              className="btn btn-ghost btn-sm hide-when-collapsed desktop-collapse-toggle"
               onClick={() => setCollapsed(true)}
               type="button"
               title="Zwiń menu"
@@ -137,7 +153,7 @@ export function AppShell({
             </button>
             {collapsed ? (
               <button
-                className="btn btn-ghost btn-sm"
+                className="btn btn-ghost btn-sm desktop-collapse-toggle"
                 onClick={() => setCollapsed(false)}
                 type="button"
                 title="Rozwiń menu"
@@ -145,6 +161,14 @@ export function AppShell({
                 <ChevronRight size={16} />
               </button>
             ) : null}
+            <button
+              className="btn btn-ghost btn-sm mobile-close"
+              onClick={() => setNavOpen(false)}
+              type="button"
+              title="Zamknij menu"
+            >
+              <X size={18} />
+            </button>
           </div>
 
           <div className="workspace">
@@ -202,12 +226,21 @@ export function AppShell({
       <main className="main">
         <div className="topbar">
           <div className="row">
+            <button
+              aria-expanded={navOpen}
+              aria-label="Otwórz menu"
+              className="btn btn-ghost btn-sm mobile-menu-trigger"
+              onClick={() => setNavOpen(true)}
+              type="button"
+            >
+              <Menu size={19} />
+            </button>
             <UserRound size={20} />
-            <span className="medium">{workspaceTitle}</span>
+            <span className="medium truncate">{workspaceTitle}</span>
           </div>
           <div className="row">
             <span className="badge badge-outline">{roleLabels[me.user.appRole]}</span>
-            <span className="muted t-sm">{me.user.email}</span>
+            <span className="muted t-sm topbar-email">{me.user.email}</span>
           </div>
         </div>
         {error ? (

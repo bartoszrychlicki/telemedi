@@ -118,12 +118,12 @@ export default function AdminCompanyPage() {
             <tbody>
               {detail.users.map((user) => (
                 <tr key={user.id}>
-                  <td>
+                  <td data-label="Użytkownik">
                     <div className="bold">{user.name}</div>
                     <div className="muted t-sm">{user.email}</div>
                   </td>
-                  <td>{roleLabels[user.appRole]}</td>
-                  <td>{user.emailVerified ? "Aktywny" : "Niezweryfikowany"}</td>
+                  <td data-label="Rola">{roleLabels[user.appRole]}</td>
+                  <td data-label="Status">{user.emailVerified ? "Aktywny" : "Niezweryfikowany"}</td>
                 </tr>
               ))}
             </tbody>
@@ -151,17 +151,17 @@ export default function AdminCompanyPage() {
           <tbody>
             {detail.recentReferrals.map((referral) => (
               <tr key={referral.id}>
-                <td>
+                <td data-label="Pracownik">
                   <div className="bold">{referral.employeeNameSnapshot}</div>
                   <div className="muted t-sm">{referral.positionSnapshot}</div>
                 </td>
-                <td>{referralTypeLabels[referral.type]}</td>
-                <td><StatusBadge status={referral.status} /></td>
-                <td>
+                <td data-label="Typ">{referralTypeLabels[referral.type]}</td>
+                <td data-label="Status"><StatusBadge status={referral.status} /></td>
+                <td data-label="Termin">
                   {formatDate(referral.deadlineDate)}
                   <div className="muted t-sm">{formatDateTime(referral.appointmentDate)}</div>
                 </td>
-                <td>
+                <td data-label="PDF">
                   <a
                     className="btn btn-outline btn-sm"
                     href={`/api/admin/companies/${detail.company.id}/referrals/${referral.id}/pdf`}

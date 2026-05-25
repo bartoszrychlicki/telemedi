@@ -189,20 +189,20 @@ export default function EmployeesPage() {
             <tbody>
               {sorted.map((employee) => (
                 <tr key={employee.id}>
-                  <td>
+                  <td data-label="Pracownik">
                     <div className="bold">
                       {employee.firstName} {employee.lastName}
                     </div>
                     <div className="muted t-sm">{employee.address}</div>
                   </td>
-                  <td>{employee.position}</td>
-                  <td className="tabular">{maskPesel(employee.pesel)}</td>
-                  <td>
+                  <td data-label="Stanowisko">{employee.position}</td>
+                  <td className="tabular" data-label="PESEL">{maskPesel(employee.pesel)}</td>
+                  <td data-label="Kontakt">
                     <div>{employee.email}</div>
                     <div className="muted t-sm">{employee.phone}</div>
                   </td>
-                  <td>{employee._count?.referrals ?? 0}</td>
-                  <td className="tabular">{formatDate(employee.createdAt)}</td>
+                  <td data-label="Skierowania">{employee._count?.referrals ?? 0}</td>
+                  <td className="tabular" data-label="Dodano">{formatDate(employee.createdAt)}</td>
                 </tr>
               ))}
             </tbody>

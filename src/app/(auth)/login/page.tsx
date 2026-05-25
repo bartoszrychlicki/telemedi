@@ -39,9 +39,9 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[var(--background)] px-6">
-      <div className="grid w-full max-w-5xl grid-cols-[1fr_420px] gap-8">
-        <section className="flex flex-col justify-center">
+    <main className="login-shell flex min-h-screen items-center justify-center bg-[var(--background)] px-6">
+      <div className="login-layout grid w-full max-w-5xl grid-cols-[1fr_420px] gap-8">
+        <section className="login-hero flex flex-col justify-center">
           <div className="brand">
             <div className="brand-mark">T</div>
             <div>
@@ -53,7 +53,7 @@ export default function LoginPage() {
             Portal do obsługi skierowań medycyny pracy
           </h1>
           <p className="mt-4 max-w-xl text-lg text-[var(--muted-foreground)]">
-            Desktopowy system dla HR oraz panel administracyjny Telemedi.
+            System dla HR oraz panel administracyjny Telemedi.
           </p>
         </section>
         <form className="card col" onSubmit={submit}>

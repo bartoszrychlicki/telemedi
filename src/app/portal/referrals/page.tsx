@@ -126,7 +126,7 @@ export default function ReferralsPage() {
               <tbody>
                 {referrals.map((referral) => (
                   <tr key={referral.id}>
-                    <td>
+                    <td data-label="Pracownik">
                       <Link className="bold" href={`/portal/referrals/${referral.id}`}>
                         {referral.employeeNameSnapshot}
                       </Link>
@@ -137,22 +137,22 @@ export default function ReferralsPage() {
                         </div>
                       ) : null}
                     </td>
-                    <td>{referralTypeLabels[referral.type]}</td>
-                    <td><StatusBadge status={referral.status} /></td>
-                    <td>
+                    <td data-label="Typ">{referralTypeLabels[referral.type]}</td>
+                    <td data-label="Status"><StatusBadge status={referral.status} /></td>
+                    <td data-label="Termin">
                       <div>{formatDate(referral.deadlineDate)}</div>
                       <div className="muted t-sm">
                         wyst. {formatDate(referral.issuedAt)}
                       </div>
                     </td>
-                    <td className="muted t-sm">
+                    <td className="muted t-sm" data-label="Placówka">
                       {referral.facilityName ?? "Jeszcze nie umówiono"}
                       {referral.appointmentDate ? (
                         <div>{formatDateTime(referral.appointmentDate)}</div>
                       ) : null}
                     </td>
-                    <td>{referral.hazardFactors.length}</td>
-                    <td>
+                    <td data-label="Czynniki">{referral.hazardFactors.length}</td>
+                    <td data-label="PDF">
                       <a className="btn btn-outline btn-sm" href={`/api/referrals/${referral.id}/pdf`}>
                         <Download size={16} />
                       </a>

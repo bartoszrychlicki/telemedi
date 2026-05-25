@@ -158,12 +158,12 @@ export default function SettingsPage() {
             <tbody>
               {settings.users.map((user) => (
                 <tr key={user.id}>
-                  <td>
+                  <td data-label="Osoba">
                     <div className="bold">{user.name}</div>
                     <div className="muted t-sm">{user.email}</div>
                   </td>
-                  <td>{roleLabels[user.appRole]}</td>
-                  <td>{formatDate(user.createdAt)}</td>
+                  <td data-label="Rola">{roleLabels[user.appRole]}</td>
+                  <td data-label="Utworzono">{formatDate(user.createdAt)}</td>
                 </tr>
               ))}
             </tbody>
