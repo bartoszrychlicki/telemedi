@@ -1,11 +1,13 @@
 import {
   Document,
+  Font,
   Page,
   StyleSheet,
   Text,
   View,
   renderToBuffer,
 } from "@react-pdf/renderer";
+import path from "node:path";
 
 import { hazardCategoryLabels, hazardCategoryPdfOrder, referralTypeLabels } from "@/lib/constants";
 import { getReferral } from "@/server/referral-service";
@@ -13,16 +15,33 @@ import type { HazardCategory } from "@/generated/prisma/enums";
 
 type ReferralForPdf = Awaited<ReturnType<typeof getReferral>>;
 
+Font.register({
+  family: "NotoSans",
+  fonts: [
+    {
+      src: path.join(process.cwd(), "public/fonts/NotoSans-Regular.ttf"),
+      fontWeight: 400,
+    },
+    {
+      src: path.join(process.cwd(), "public/fonts/NotoSans-Bold.ttf"),
+      fontWeight: 700,
+    },
+  ],
+});
+
+Font.registerHyphenationCallback((word) => [word]);
+
 const styles = StyleSheet.create({
   page: {
     padding: 32,
     fontSize: 10,
-    fontFamily: "Helvetica",
+    fontFamily: "NotoSans",
+    fontWeight: 400,
     lineHeight: 1.35,
   },
   title: {
     fontSize: 15,
-    fontWeight: "bold",
+    fontWeight: 700,
     textAlign: "center",
     marginBottom: 16,
   },
@@ -35,7 +54,7 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   label: {
-    fontWeight: "bold",
+    fontWeight: 700,
   },
   box: {
     border: "1 solid #222",
@@ -43,10 +62,27 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   category: {
-    marginTop: 6,
+    marginTop: 8,
+  },
+  emptyCategory: {
+    marginTop: 2,
+  },
+  hazardItem: {
+    marginTop: 4,
+    paddingLeft: 8,
+  },
+  hazardName: {
+    marginBottom: 2,
+  },
+  hazardDetail: {
+    marginLeft: 8,
+    fontSize: 9,
+  },
+  signatureLine: {
+    marginTop: 28,
+    textAlign: "right",
   },
   signature: {
-    marginTop: 28,
     textAlign: "right",
   },
   small: {
@@ -154,14 +190,22 @@ function ReferralDocument({ referral }: { referral: ReferralForPdf }) {
                 {roman(index + 1)}. {hazardCategoryLabels[category]}:
               </Text>
               {hazardsByCategory[category].length === 0 ? (
-                <Text>-</Text>
+                <Text style={styles.emptyCategory}>-</Text>
               ) : (
                 hazardsByCategory[category].map((hazard) => (
-                  <Text key={hazard.id}>
-                    - {hazard.factorNameSnapshot}; wielkość narażenia:{" "}
-                    {hazard.exposureValue}; wyniki pomiarów:{" "}
-                    {hazard.measurementResult ?? "nie dotyczy / brak pomiaru"}
-                  </Text>
+                  <View key={hazard.id} style={styles.hazardItem} wrap={false}>
+                    <Text style={styles.hazardName}>
+                      - {hazard.factorNameSnapshot}
+                    </Text>
+                    <Text style={styles.hazardDetail}>
+                      <Text style={styles.label}>Wielkość narażenia: </Text>
+                      {hazard.exposureValue}
+                    </Text>
+                    <Text style={styles.hazardDetail}>
+                      <Text style={styles.label}>Wyniki pomiarów: </Text>
+                      {hazard.measurementResult ?? "nie dotyczy / brak pomiaru"}
+                    </Text>
+                  </View>
                 ))
               )}
             </View>
@@ -175,7 +219,7 @@ function ReferralDocument({ referral }: { referral: ReferralForPdf }) {
           </Text>
         </View>
 
-        <Text style={styles.signature}>.............................................</Text>
+        <Text style={styles.signatureLine}>.............................................</Text>
         <Text style={styles.signature}>
           {referral.company.pdfSignatoryName ?? "podpis pracodawcy"}
         </Text>
