@@ -41,6 +41,37 @@ describe("xlsx service", () => {
     });
   });
 
+  it("builds the import template with a complete example row", () => {
+    return buildEmployeeImportTemplate().then(async (buffer) => {
+      const workbook = new ExcelJS.Workbook();
+      await workbook.xlsx.load(buffer as never);
+      const worksheet = workbook.worksheets[0];
+      if (!worksheet) {
+        throw new Error("worksheet missing");
+      }
+      const values = worksheet.getRow(2).values;
+      const exampleRow = Array.isArray(values) ? values.slice(1) : [];
+
+      expect(exampleRow).toEqual([
+        "Anna",
+        "Kowalska",
+        "85010112345",
+        "1985-01-01",
+        "ABC",
+        "123456",
+        "Dowód osobisty",
+        "Polska",
+        "Specjalistka ds. kadr",
+        "ul. Prosta 1, 00-001 Warszawa",
+        "anna.kowalska@example.com",
+        "500 100 200",
+      ]);
+      expect(exampleRow.every((value) => String(value).trim().length > 0)).toBe(
+        true,
+      );
+    });
+  });
+
   it("imports valid rows and reports invalid rows", async () => {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Pracownicy");
